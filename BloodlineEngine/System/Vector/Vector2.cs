@@ -13,7 +13,7 @@ namespace BloodlineEngine
 
         public override string ToString()
         {
-            return X + ", " + Y;
+            return "Vector2(" + X + ", " + Y + ")";
         }
 
         public float Magnituded => Magnitude(this);
@@ -24,17 +24,16 @@ namespace BloodlineEngine
             { return new Vector2(0, 0); }
         public static float Magnitude(Vector2 value)
             { return (float)Math.Sqrt(value.X * value.X + value.Y * value.Y); }
-        public static float GetDistance(Vector2 value, Vector2 target)
-            { return Magnitude(target - value); }
         public static Vector2 Normalize(Vector2 value) 
-        {
-            float magnitude = Magnitude(value);
-            return new Vector2(value.X / magnitude, value.Y / magnitude);
-        }
+            { return value / Magnitude(value); }
         public static Vector2 Abs(Vector2 value)
             { return new Vector2(Math.Abs(value.X), Math.Abs(value.Y)); }
         public static Vector2 Pow(Vector2 value, double power) 
             { return new Vector2((float)Math.Pow(value.X, power), (float)Math.Pow(value.Y, power)); }
+        public static float GetDistance(Vector2 value, Vector2 target)
+            { return Magnitude(target - value); }
+        public static float GetRelativeAngle(Vector2 value, Vector2 target)
+            { return (float)Math.Atan2(target.Y - value.Y, target.X - value.X); }
         public static Vector2 MoveInDirection(Vector2 value, Vector2 direction, float distance)
             { return value + Normalize(direction) * distance; }
         public static Vector2 MoveInDirection(Vector2 value, float angle, float distance)
@@ -50,8 +49,6 @@ namespace BloodlineEngine
             if (magnitude <= maxDistanceDelta || magnitude == 0f) { return target; }
             return value + direction / magnitude * maxDistanceDelta;
         }
-        public static float GetRelativeAngle(Vector2 value, Vector2 target)
-            { return (float)Math.Atan2(target.Y - value.Y, target.X - value.X); }
 
         public Vector2 Copy() { return new Vector2(X, Y); }
 

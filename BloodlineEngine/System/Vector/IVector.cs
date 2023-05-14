@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BloodlineEngine
 {
-    public interface IVector : ILoggable
+    public interface IVector : IBLToString
     {
+        
     }
 }

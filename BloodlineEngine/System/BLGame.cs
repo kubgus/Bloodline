@@ -16,6 +16,11 @@ namespace BloodlineEngine
         {
             Window = new BLWindow();
 
+            Debug.Trace("Everything is.");
+            Debug.BLInfo("Everything is alright.");
+            Debug.BLWarn("You are using outdated dependencies!");
+            Debug.Error("Window wasn't initialized properly!");
+
             m_Running = true;
             while (m_Running)
             {
