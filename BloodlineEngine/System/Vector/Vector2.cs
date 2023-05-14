@@ -75,7 +75,7 @@ namespace BloodlineEngine
 
         public static implicit operator Vector2(float value) { return new Vector2(value); }
         public static implicit operator Vector2((float, float) value) { return new Vector2(value.Item1, value.Item2); }
-
+        public static implicit operator (float, float)(Vector2 value) { return (value.X, value.Y); }
         public static implicit operator string(Vector2 value) { return value.ToString(); }
     }
 }
