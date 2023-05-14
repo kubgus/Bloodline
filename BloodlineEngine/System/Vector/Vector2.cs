@@ -13,7 +13,7 @@ namespace BloodlineEngine
 
         public override string ToString()
         {
-            return "Vector2(" + X + ", " + Y + ")";
+            return "Vector2(" + X + "," + Y + ")";
         }
 
         public float Magnituded => Magnitude(this);
