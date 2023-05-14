@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -71,5 +72,10 @@ namespace BloodlineEngine
         public static Vector2 operator /(Vector2 left, Vector2 right) { return new Vector2(left.X / right.X, left.Y / right.Y); }
         public static Vector2 operator /(Vector2 left, float right) { return left / new Vector2(right); }
         public static Vector2 operator /(float left, Vector2 right) { return new Vector2(left) / right; }
+
+        public static implicit operator Vector2(float value) { return new Vector2(value); }
+        public static implicit operator Vector2((float, float) value) { return new Vector2(value.Item1, value.Item2); }
+
+        public static implicit operator string(Vector2 value) { return value.ToString(); }
     }
 }
