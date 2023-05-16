@@ -7,16 +7,16 @@ using BloodlineEngine;
 
 namespace Sandbox
 {
-    class Game : BLGame
+    class Game : BLApplication
     {
-
+        public Game(Vector2 size, string title) : base(size, title) { }
     }
 
     class Program
     {
         static void Main()
         {
-            _ = new Game();
+            _ = new Game(512, "Hello");
         }
     }
 }

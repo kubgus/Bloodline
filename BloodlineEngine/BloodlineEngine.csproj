@@ -7,4 +7,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Content\BloodlineLogo512.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content\BloodlineLogo512.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

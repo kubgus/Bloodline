@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace BloodlineEngine
 {
@@ -20,14 +15,14 @@ namespace BloodlineEngine
         public static void BLError(dynamic value) { Console.ForegroundColor = ConsoleColor.Red; Log("BL", 'E', value); }
 
         private static void Log(string caller, char code, dynamic value)
-            { Console.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] ({caller}{code}) {value}"); }
+        { Console.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] ({caller}{code}) {value}"); }
 
         /// <summary>
-        /// Throw error if condition is false
+        /// Throw error if condition is false.
         /// </summary>
         /// <param name="message">Error message</param>
-        public static void Assert(bool condition, string message) 
-        { 
+        public static void Assert(bool condition, string message)
+        {
             if (condition) return;
 
             StackTrace stackTrace = new(true);

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BloodlineEngine
+﻿namespace BloodlineEngine
 {
     public class Vector2 : IVector
     {
@@ -22,21 +15,21 @@ namespace BloodlineEngine
         public Vector2 Absoluted => Abs(this);
 
         public static Vector2 Zero()
-            { return new Vector2(0, 0); }
+        { return new Vector2(0, 0); }
         public static float Magnitude(Vector2 value)
-            { return (float)Math.Sqrt(value.X * value.X + value.Y * value.Y); }
-        public static Vector2 Normalize(Vector2 value) 
-            { return value / Magnitude(value); }
+        { return (float)Math.Sqrt(value.X * value.X + value.Y * value.Y); }
+        public static Vector2 Normalize(Vector2 value)
+        { return value / Magnitude(value); }
         public static Vector2 Abs(Vector2 value)
-            { return new Vector2(Math.Abs(value.X), Math.Abs(value.Y)); }
-        public static Vector2 Pow(Vector2 value, double power) 
-            { return new Vector2((float)Math.Pow(value.X, power), (float)Math.Pow(value.Y, power)); }
+        { return new Vector2(Math.Abs(value.X), Math.Abs(value.Y)); }
+        public static Vector2 Pow(Vector2 value, double power)
+        { return new Vector2((float)Math.Pow(value.X, power), (float)Math.Pow(value.Y, power)); }
         public static float GetDistance(Vector2 value, Vector2 target)
-            { return Magnitude(target - value); }
+        { return Magnitude(target - value); }
         public static float GetRelativeAngle(Vector2 value, Vector2 target)
-            { return (float)Math.Atan2(target.Y - value.Y, target.X - value.X); }
+        { return (float)Math.Atan2(target.Y - value.Y, target.X - value.X); }
         public static Vector2 MoveInDirection(Vector2 value, Vector2 direction, float distance)
-            { return value + Normalize(direction) * distance; }
+        { return value + Normalize(direction) * distance; }
         public static Vector2 MoveInDirection(Vector2 value, float angle, float distance)
         {
             float x = (float)Math.Cos(angle) * distance;
@@ -53,7 +46,7 @@ namespace BloodlineEngine
 
         public Vector2 Copy() { return new Vector2(X, Y); }
 
-        public Vector2(float x, float y) {  X = x; Y = y; }
+        public Vector2(float x, float y) { X = x; Y = y; }
         public Vector2(float xy) { X = xy; Y = xy; }
         public Vector2() { X = Zero().X; Y = Zero().Y; }
 
@@ -73,9 +66,18 @@ namespace BloodlineEngine
         public static Vector2 operator /(Vector2 left, float right) { return left / new Vector2(right); }
         public static Vector2 operator /(float left, Vector2 right) { return new Vector2(left) / right; }
 
+        public static Vector2 operator %(Vector2 left, Vector2 right) { return new Vector2(left.X % right.X, left.Y % right.Y); }
+        public static Vector2 operator %(Vector2 left, float right) { return left % new Vector2(right); }
+        public static Vector2 operator %(float left, Vector2 right) { return new Vector2(left) % right; }
+
         public static implicit operator Vector2(float value) { return new Vector2(value); }
         public static implicit operator Vector2((float, float) value) { return new Vector2(value.Item1, value.Item2); }
         public static implicit operator (float, float)(Vector2 value) { return (value.X, value.Y); }
         public static implicit operator string(Vector2 value) { return value.ToString(); }
+
+        public static explicit operator Size(Vector2 value) { return new Size((int)value.X, (int)value.Y); }
+        public static explicit operator Vector2(Size value) { return new Vector2(value.Width, value.Height); }
+        public static explicit operator Point(Vector2 value) { return new Point((int)value.X, (int)value.Y); }
+        public static explicit operator Vector2(Point value) { return new Vector2(value.X, value.Y); }
     }
 }
