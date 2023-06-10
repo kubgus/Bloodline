@@ -7,8 +7,13 @@ namespace Sandbox
     {
         public override void Ready()
         {
-            Root.Transform.X = 50;
-            Root.Transform.Y = 50;
+            Root.Transform.Position = (20,30);
+            Root.Transform.Scale = (50,70);
+        }
+
+        public override void Update()
+        {
+            Root.Transform.X += 1f;
         }
     }
 
