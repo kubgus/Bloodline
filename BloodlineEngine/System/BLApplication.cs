@@ -59,8 +59,12 @@
         public virtual void DebugFrame() { } // Runs directly before the next frame's DebugTick
         public virtual void Finish() { } // Runs when the GameLoop ends
 
-        private void BLReady() { Ready(); BLGeneralComponentHandler.Run(Component.ReadyDelegate); }
-        private void BLDebugTick() { DebugTick(); BLGeneralComponentHandler.Run(Component.DebugTickDelegate); }
+        private void BLReady() { Ready(); BLGeneralComponentHandler.Run(Component.ReadyDelegate);
+            Time.ResetTime();
+        }
+        private void BLDebugTick() { DebugTick(); BLGeneralComponentHandler.Run(Component.DebugTickDelegate);
+            Time.BLNextFrame();
+        }
         private void BLTick() { Tick(); BLGeneralComponentHandler.Run(Component.TickDelegate); }
         private void BLStep() { Step(); BLGeneralComponentHandler.Run(Component.StepDelegate); }
         private void BLUpdate() { Update(); BLGeneralComponentHandler.Run(Component.UpdateDelegate); }

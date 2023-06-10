@@ -24,6 +24,8 @@
 
             Paint += Renderer.Render;
 
+            KeyPreview = true;
+
             CreateEventHandlers();
         }
 
@@ -37,7 +39,7 @@
             MouseEnter += Hover;
             MouseLeave += Unhover;
 
-            KeyDown += Input.Press;
+            PreviewKeyDown += Input.Press;
             KeyUp += Input.Release;
 
             MouseDown += Input.Press;

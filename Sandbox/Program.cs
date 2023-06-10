@@ -1,51 +1,40 @@
 ﻿using BloodlineEngine;
-using Microsoft.VisualBasic.Logging;
 
 namespace Sandbox
 {
-    public class TestScript : Component
+    class PlayerMovement : Component
     {
-        public override void Ready()
-        {
-            Root.Transform.Position = (20,30);
-            Root.Transform.Scale = (50,70);
-            Root.GetComponent<Quad>().Color = (44, 20, 40);
-        }
-
         public override void Update()
         {
-            Root.Transform.X += 1f;
-            Root.GetComponent<Quad>().Color.R += 1;
+            PlayerData playerData = Root.GetComponent<PlayerData>();
 
-            if (Root.Transform.X > 300f) { Root.Transform.BottomLeft = (0, 300); }
+            Vector2 direction = 0f;
+
+            if (Input.IsKeyPressed(System.Windows.Forms.Keys.W)) { direction.Y = -1f; }
+            if (Input.IsKeyPressed(System.Windows.Forms.Keys.S)) { direction.Y = 1f; }
+            if (Input.IsKeyPressed(System.Windows.Forms.Keys.A)) { direction.X = -1f; }
+            if (Input.IsKeyPressed(System.Windows.Forms.Keys.D)) { direction.X = 1f; }
+
+            Root.Transform.Position += direction * playerData.Speed * Time.DeltaTime;
         }
+    }
+
+    class PlayerData : Component
+    {
+        public float Speed;
     }
 
     class Player : Root
     {
         public Player()
         {
-            AddComponent<Quad>();
-            AddComponent<TestScript>();
-        }
-    }
+            Transform.Position = 30f;
+            Transform.Scale = 10f;
 
-    class ObM : Component
-    {
-        public override void Ready()
-        {
-            Root.Transform.Position = (10, 300);
-            Root.Transform.Scale = (10, 30);
-            Root.GetComponent<Quad>().Color = (0, 255, 0, 255);
-        }
-    }
+            AddComponent<Quad>().Color = (255, 100, 0, 255);
 
-    class Obstelek : Root
-    {
-        public Obstelek()
-        {
-            AddComponent<Quad>();
-            AddComponent <ObM>();
+            AddComponent<PlayerData>().Speed = 50f;
+            AddComponent<PlayerMovement>();
         }
     }
 
@@ -54,12 +43,15 @@ namespace Sandbox
         public Game(Vector2 size, string title) : base(size, title) { }
 
         public Player Player;
-        public Obstelek Obstelek;
 
         public override void Ready()
         {
             Player = new Player();
-            Obstelek = new Obstelek();
+        }
+
+        public override void Update()
+        {
+            // Debug.Trace(Input.IsKeyPressed(System.Windows.Forms.Keys.X));
         }
     }
 
