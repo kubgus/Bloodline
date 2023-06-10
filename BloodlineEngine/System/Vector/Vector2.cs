@@ -5,10 +5,11 @@
         public float X { get; set; }
         public float Y { get; set; }
 
-        public override string ToString()
-        {
-            return "Vector2(" + X + "," + Y + ")";
-        }
+        public Vector2(float x, float y) { X = x; Y = y; }
+        public Vector2(float xy) { X = xy; Y = xy; }
+        public Vector2() { X = Zero().X; Y = Zero().Y; }
+
+        public Vector2 Copy() { return new Vector2(X, Y); }
 
         public float Magnituded => Magnitude(this);
         public Vector2 Normalized => Normalize(this);
@@ -44,11 +45,7 @@
             return value + direction / magnitude * maxDistanceDelta;
         }
 
-        public Vector2 Copy() { return new Vector2(X, Y); }
-
-        public Vector2(float x, float y) { X = x; Y = y; }
-        public Vector2(float xy) { X = xy; Y = xy; }
-        public Vector2() { X = Zero().X; Y = Zero().Y; }
+        public override string ToString() { return "Vector2(" + X + "," + Y + ")"; }
 
         public static Vector2 operator +(Vector2 left, Vector2 right) { return new Vector2(left.X + right.X, left.Y + right.Y); }
         public static Vector2 operator +(Vector2 left, float right) { return left + new Vector2(right); }

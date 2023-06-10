@@ -6,7 +6,7 @@
         public bool Active { get; private set; }
         public bool Hovered { get; private set; }
        
-        public BLRenderer Renderer { get; private set; }
+        public BLRenderer Renderer { get; private set; } = new();
 
         public BLWindow(Vector2 size, string title, bool resizable = false)
         {
@@ -22,7 +22,6 @@
             Opened = true;
             Active = true;
 
-            Renderer = new BLRenderer();
             Paint += Renderer.Render;
 
             CreateEventHandlers();

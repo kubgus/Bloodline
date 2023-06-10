@@ -8,7 +8,12 @@ namespace BloodlineEngine
         public InterpolationMode InterpolationMode { get; set; } = InterpolationMode.NearestNeighbor;
         public PixelOffsetMode PixelOffsetMode { get; set; } = PixelOffsetMode.Half;
 
-        public BLRenderer() { }
+        private static List<RenderedComponent> m_ActiveRenderedComponents = new();
+
+        public BLRenderer()
+        {
+            m_ActiveRenderedComponents.Clear();
+        }
 
         public void Render(object? sender, PaintEventArgs e)
         {
@@ -18,6 +23,30 @@ namespace BloodlineEngine
             g.PixelOffsetMode = PixelOffsetMode;
 
             g.Clear(ClearColor);
+
+            List<RenderedComponent> queue = Get();
+
+            foreach (RenderedComponent renderedComponent in queue)
+            {
+                
+            }
+
+            g.ResetTransform();
+        }
+
+        public static void AddGlobalRenderedComponent(RenderedComponent component)
+        {
+            m_ActiveRenderedComponents.Add(component);
+        }
+
+        public static void RemoveGlobalRenderedComponent(RenderedComponent component)
+        {
+            m_ActiveRenderedComponents.Remove(component);
+        }
+
+        private static List<RenderedComponent> Get()
+        {
+            return m_ActiveRenderedComponents.ToList();
         }
     }
 }
