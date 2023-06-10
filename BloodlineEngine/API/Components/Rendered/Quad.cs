@@ -4,7 +4,7 @@
     {
         public Color4 Color { get; set; }
 
-        public Quad() { Color = 100; }
+        public Quad() { Color = 0; }
 
     }
 }

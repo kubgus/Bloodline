@@ -1,6 +1,6 @@
 ﻿namespace BloodlineEngine
 {
-    public class Component : IBLToString
+    public abstract class Component : IBLToString
     {
         public Root Root
         {

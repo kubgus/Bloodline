@@ -2,10 +2,15 @@
 {
     public class Color4 : IVector
     {
-        public int R { get => R; set => Math.Clamp(value, 0, 255); }
-        public int G { get => G; set => Math.Clamp(value, 0, 255); }
-        public int B { get => B; set => Math.Clamp(value, 0, 255); }
-        public int A { get => A; set => Math.Clamp(value, 0, 255); }
+        public int R { get => r; set => r = Math.Clamp(value, 0, 255); }
+        public int G { get => g; set => g = Math.Clamp(value, 0, 255); }
+        public int B { get => b; set => b = Math.Clamp(value, 0, 255); }
+        public int A { get => a; set => a = Math.Clamp(value, 0, 255); }
+
+        private int r;
+        private int g;
+        private int b;
+        private int a;
 
         public Color4(int r, int g, int b, int a)
         {
@@ -38,7 +43,7 @@
         public static implicit operator Color4(int value)
         { return new Color4(value, 1); }
         public static implicit operator Color4((int, int, int) value)
-        { return new Color4(value.Item1, value.Item2, value.Item3, 1); }
+        { return new Color4(value.Item1, value.Item2, value.Item3, 255); }
         public static implicit operator Color4((int, int, int, int) value)
         { return new Color4(value.Item1, value.Item2, value.Item3, value.Item4); }
         public static implicit operator (int, int, int)(Color4 value)
