@@ -7,6 +7,7 @@
             get => m_ActiveRoot ?? null; // TODO: Figure out something to replace null with.
             set => m_ActiveRoot = value;
         }
+        public Transform Transform { get => Root.Transform; set => Root.Transform = value; }
 
         private Root? m_ActiveRoot;
 

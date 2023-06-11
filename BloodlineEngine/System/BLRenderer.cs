@@ -28,11 +28,16 @@ namespace BloodlineEngine
 
             foreach (RenderedComponent renderedComponent in queue)
             {
+                Vector2 origin = renderedComponent.Transform.Position + renderedComponent.Transform.Scale / 2f;
+                g.TranslateTransform(origin.X, origin.Y);
+                g.RotateTransform(renderedComponent.Transform.Rotation);
+                g.TranslateTransform(-origin.X, -origin.Y);
+
                 switch (renderedComponent)
                 {
                     case Quad r:
-                        g.FillRectangle(new SolidBrush(r.Color), r.Root.Transform.X, r.Root.Transform.Y,
-                            r.Root.Transform.Scale.X, r.Root.Transform.Scale.Y);
+                        g.FillRectangle(new SolidBrush(r.Color), r.Transform.X, r.Transform.Y,
+                            r.Transform.Scale.X, r.Transform.Scale.Y);
                         break;
                 }
 

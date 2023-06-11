@@ -15,7 +15,9 @@ namespace Sandbox
             if (Input.IsKeyPressed(System.Windows.Forms.Keys.A)) { direction.X = -1f; }
             if (Input.IsKeyPressed(System.Windows.Forms.Keys.D)) { direction.X = 1f; }
 
-            Root.Transform.Position += direction * playerData.Speed * Time.DeltaTime;
+            if (direction.X != 0f || direction.Y != 0f) { Transform.Rotation++; }
+
+            Transform.Position += direction * playerData.Speed * Time.DeltaTime;
         }
     }
 
@@ -28,9 +30,9 @@ namespace Sandbox
     {
         public override void Update()
         {
-            Root.GetComponent<Quad>().Color.R = (int)Root.Transform.X / (512 / 255);
-            Root.GetComponent<Quad>().Color.G = (int)(512 - Root.Transform.X) / (512 / 255);
-            Root.GetComponent<Quad>().Color.B = (int)Root.Transform.Y / (512 / 255);
+            Root.GetComponent<Quad>().Color.R = (int)Transform.X / (512 / 255);
+            Root.GetComponent<Quad>().Color.G = (int)(512 - Transform.X) / (512 / 255);
+            Root.GetComponent<Quad>().Color.B = (int)Transform.Y / (512 / 255);
         }
     }
 
@@ -39,7 +41,7 @@ namespace Sandbox
         public Player()
         {
             Transform.Position = 30f;
-            Transform.Scale = 10f;
+            Transform.Scale = 30f;
 
             AddComponent<Quad>().Color = (255,0,0);
 
