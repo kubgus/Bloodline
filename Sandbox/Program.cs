@@ -24,6 +24,16 @@ namespace Sandbox
         public float Speed;
     }
 
+    class ColorScript : Component
+    {
+        public override void Update()
+        {
+            Root.GetComponent<Quad>().Color.R = (int)Root.Transform.X / (512 / 255);
+            Root.GetComponent<Quad>().Color.G = (int)(512 - Root.Transform.X) / (512 / 255);
+            Root.GetComponent<Quad>().Color.B = (int)Root.Transform.Y / (512 / 255);
+        }
+    }
+
     class Player : Root
     {
         public Player()
@@ -31,10 +41,11 @@ namespace Sandbox
             Transform.Position = 30f;
             Transform.Scale = 10f;
 
-            AddComponent<Quad>().Color = (255, 100, 0, 255);
+            AddComponent<Quad>().Color = (255,0,0);
 
             AddComponent<PlayerData>().Speed = 50f;
             AddComponent<PlayerMovement>();
+            AddComponent<ColorScript>();
         }
     }
 
