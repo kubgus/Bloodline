@@ -14,6 +14,8 @@
             m_MainThread = new Thread(MainLoop);
             m_MainThread.Start();
 
+            Time.FixedUpdate += BLFixedUpdate;
+
             m_Running = true;
 
             Application.Run(Window);
@@ -56,6 +58,7 @@
         public virtual void Spark() { } // Runs after error checks before everything else
         public virtual void Draw() { } // Runs before drawing after Window is confirmed
         public virtual void Update() { } // Runs after drawing
+        public virtual void FixedUpdate() { } // Runs 60 times per second
         public virtual void DebugShift() { } // Runs directly before the next frame's DebugTick
         public virtual void Halt() { } // Runs when the GameLoop ends
 
@@ -65,11 +68,18 @@
         private void BLDebugSpark() { DebugSpark(); BLGeneralComponentHandler.Run(Component.DebugSparkDelegate);
             Time.BLNextFrame();
         }
-        private void BLSpark() { Spark(); BLGeneralComponentHandler.Run(Component.SparkDelegate); }
-        private void BLDraw() { Draw(); BLGeneralComponentHandler.Run(Component.DrawDelegate); }
-        private void BLUpdate() { Update(); BLGeneralComponentHandler.Run(Component.UpdateDelegate); }
-        private void BLDebugShift() { DebugShift(); BLGeneralComponentHandler.Run(Component.DebugShiftDelegate); }
-        private void BLHalt() { Halt(); BLGeneralComponentHandler.Run(Component.HaltDelegate); }
+        private void BLSpark()
+        { Spark(); BLGeneralComponentHandler.Run(Component.SparkDelegate); }
+        private void BLDraw()
+        { Draw(); BLGeneralComponentHandler.Run(Component.DrawDelegate); }
+        private void BLUpdate()
+        { Update(); BLGeneralComponentHandler.Run(Component.UpdateDelegate); }
+        private void BLFixedUpdate(object? sender, EventArgs e)
+        { FixedUpdate(); BLGeneralComponentHandler.Run(Component.FixedUpdateDelegate); }
+        private void BLDebugShift()
+        { DebugShift(); BLGeneralComponentHandler.Run(Component.DebugShiftDelegate); }
+        private void BLHalt()
+        { Halt(); BLGeneralComponentHandler.Run(Component.HaltDelegate); }
 
     }
 }

@@ -4,7 +4,7 @@ namespace Sandbox
 {
     class PlayerMovement : Component
     {
-        public override void Update()
+        public override void FixedUpdate()
         {
             PlayerData playerData = Root.GetComponent<PlayerData>();
 

@@ -16,6 +16,7 @@
         public static BLComponentEventDelegate SparkDelegate = (Component component) => component.BLSpark();
         public static BLComponentEventDelegate DrawDelegate = (Component component) => component.BLDraw();
         public static BLComponentEventDelegate UpdateDelegate = (Component component) => component.BLUpdate();
+        public static BLComponentEventDelegate FixedUpdateDelegate = (Component component) => component.BLFixedUpdate();
         public static BLComponentEventDelegate DebugShiftDelegate = (Component component) => component.BLDebugShift();
         public static BLComponentEventDelegate HaltDelegate = (Component component) => component.BLHalt();
 
@@ -34,6 +35,7 @@
         public virtual void Spark() { }
         public virtual void Draw() { }
         public virtual void Update() { }
+        public virtual void FixedUpdate() { }
         public virtual void DebugShift() { }
         public virtual void Halt() { }
 
@@ -42,6 +44,7 @@
         private void BLSpark() { Spark(); }
         private void BLDraw() { Draw(); }
         private void BLUpdate() { Update(); }
+        private void BLFixedUpdate() { FixedUpdate(); }
         private void BLDebugShift() { DebugShift(); }
         private void BLHalt() { Halt(); }
 
