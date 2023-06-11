@@ -12,12 +12,12 @@
 
         public delegate void BLComponentEventDelegate(Component component);
         public static BLComponentEventDelegate ReadyDelegate = (Component component) => component.BLReady();
-        public static BLComponentEventDelegate DebugTickDelegate = (Component component) => component.BLDebugTick();
-        public static BLComponentEventDelegate TickDelegate = (Component component) => component.BLTick();
-        public static BLComponentEventDelegate StepDelegate = (Component component) => component.BLStep();
+        public static BLComponentEventDelegate DebugSparkDelegate = (Component component) => component.BLDebugSpark();
+        public static BLComponentEventDelegate SparkDelegate = (Component component) => component.BLSpark();
+        public static BLComponentEventDelegate DrawDelegate = (Component component) => component.BLDraw();
         public static BLComponentEventDelegate UpdateDelegate = (Component component) => component.BLUpdate();
-        public static BLComponentEventDelegate DebugFrameDelegate = (Component component) => component.BLDebugFrame();
-        public static BLComponentEventDelegate FinishDelegate = (Component component) => component.BLFinish();
+        public static BLComponentEventDelegate DebugShiftDelegate = (Component component) => component.BLDebugShift();
+        public static BLComponentEventDelegate HaltDelegate = (Component component) => component.BLHalt();
 
         public Component()
         {
@@ -30,20 +30,20 @@
         }
 
         public virtual void Ready() { }
-        public virtual void DebugTick() { }
-        public virtual void Tick() { }
-        public virtual void Step() { }
+        public virtual void DebugSpark() { }
+        public virtual void Spark() { }
+        public virtual void Draw() { }
         public virtual void Update() { }
-        public virtual void DebugFrame() { }
-        public virtual void Finish() { }
+        public virtual void DebugShift() { }
+        public virtual void Halt() { }
 
         private void BLReady() { Ready(); Debug.Assert(Root is not null, "Component root is null!"); }
-        private void BLDebugTick() { DebugTick(); }
-        private void BLTick() { Tick(); }
-        private void BLStep() { Step(); }
+        private void BLDebugSpark() { DebugSpark(); }
+        private void BLSpark() { Spark(); }
+        private void BLDraw() { Draw(); }
         private void BLUpdate() { Update(); }
-        private void BLDebugFrame() { DebugFrame(); }
-        private void BLFinish() { Finish(); }
+        private void BLDebugShift() { DebugShift(); }
+        private void BLHalt() { Halt(); }
 
         public override string ToString() { return "Component()"; }
     }

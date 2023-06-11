@@ -48,11 +48,6 @@ namespace Sandbox
         {
             Player = new Player();
         }
-
-        public override void Update()
-        {
-            // Debug.Trace(Input.IsKeyPressed(System.Windows.Forms.Keys.X));
-        }
     }
 
     class Program

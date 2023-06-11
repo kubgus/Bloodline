@@ -25,15 +25,15 @@
 
             while (m_Running)
             {
-                BLDebugTick();
+                BLDebugSpark();
 
                 if (!m_MainThread.IsAlive || !Window.Opened) { m_Running = false; return; }
 
-                BLTick();
+                BLSpark();
 
                 try
                 {
-                    BLStep();
+                    BLDraw();
 
                     Window.BeginInvoke((MethodInvoker)delegate { Window.Refresh(); });
 
@@ -43,33 +43,33 @@
                 }
                 catch { Debug.BLWarn("Window is not present! It is either being initialized or has not been created at all."); }
 
-                BLDebugFrame();
+                BLDebugShift();
             }
 
-            BLFinish();
+            BLHalt();
 
             Application.Exit();
         }
 
         public virtual void Ready() { } // Runs when the GameLoop starts
-        public virtual void DebugTick() { } // Runs before everything else
-        public virtual void Tick() { } // Runs after error checks before everything else
-        public virtual void Step() { } // Runs before drawing after Window is confirmed
+        public virtual void DebugSpark() { } // Runs before everything else
+        public virtual void Spark() { } // Runs after error checks before everything else
+        public virtual void Draw() { } // Runs before drawing after Window is confirmed
         public virtual void Update() { } // Runs after drawing
-        public virtual void DebugFrame() { } // Runs directly before the next frame's DebugTick
-        public virtual void Finish() { } // Runs when the GameLoop ends
+        public virtual void DebugShift() { } // Runs directly before the next frame's DebugTick
+        public virtual void Halt() { } // Runs when the GameLoop ends
 
         private void BLReady() { Ready(); BLGeneralComponentHandler.Run(Component.ReadyDelegate);
             Time.ResetTime();
         }
-        private void BLDebugTick() { DebugTick(); BLGeneralComponentHandler.Run(Component.DebugTickDelegate);
+        private void BLDebugSpark() { DebugSpark(); BLGeneralComponentHandler.Run(Component.DebugSparkDelegate);
             Time.BLNextFrame();
         }
-        private void BLTick() { Tick(); BLGeneralComponentHandler.Run(Component.TickDelegate); }
-        private void BLStep() { Step(); BLGeneralComponentHandler.Run(Component.StepDelegate); }
+        private void BLSpark() { Spark(); BLGeneralComponentHandler.Run(Component.SparkDelegate); }
+        private void BLDraw() { Draw(); BLGeneralComponentHandler.Run(Component.DrawDelegate); }
         private void BLUpdate() { Update(); BLGeneralComponentHandler.Run(Component.UpdateDelegate); }
-        private void BLDebugFrame() { DebugFrame(); BLGeneralComponentHandler.Run(Component.DebugFrameDelegate); }
-        private void BLFinish() { Finish(); BLGeneralComponentHandler.Run(Component.FinishDelegate); }
+        private void BLDebugShift() { DebugShift(); BLGeneralComponentHandler.Run(Component.DebugShiftDelegate); }
+        private void BLHalt() { Halt(); BLGeneralComponentHandler.Run(Component.HaltDelegate); }
 
     }
 }
