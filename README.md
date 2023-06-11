@@ -25,5 +25,5 @@ This service is not cross-platform, yet, and only works on Winodws. But I'm plan
 
 <br>
 
-## GUI? Do you mean: Cringe UI?
+## GUI? Do you mean: Cringe UI? 😎
 Yes, everything is text. Pure good ol' code.
