@@ -25,6 +25,8 @@
         { return new Vector2(Math.Abs(value.X), Math.Abs(value.Y)); }
         public static Vector2 Pow(Vector2 value, double power)
         { return new Vector2((float)Math.Pow(value.X, power), (float)Math.Pow(value.Y, power)); }
+        public static float Dot(Vector2 left, Vector2 right)
+        { return left.X * right.X  + left.Y * right.Y; }
         public static float GetDistance(Vector2 value, Vector2 target)
         { return Magnitude(target - value); }
         public static float GetRelativeAngle(Vector2 value, Vector2 target)
@@ -43,6 +45,17 @@
             float magnitude = Magnitude(direction);
             if (magnitude <= maxDistanceDelta || magnitude == 0f) { return target; }
             return value + direction / magnitude * maxDistanceDelta;
+        }
+        public static Vector2 RotateVertex(Vector2 vertex, Vector2 center, float rotationInDeg)
+        {
+            float rotation = rotationInDeg * Numf.DegToRad;
+            float cos = MathF.Cos(rotation);
+            float sin = MathF.Sin(rotation);
+            float translatedX = vertex.X - center.X;
+            float translatedY = vertex.Y - center.Y;
+            float rotatedX = translatedX * cos - translatedY * sin;
+            float rotatedY = translatedX * sin + translatedY * cos;
+            return new Vector2(rotatedX + center.X, rotatedY + center.Y);
         }
 
         public override string ToString() { return "Vector2(" + X + "," + Y + ")"; }

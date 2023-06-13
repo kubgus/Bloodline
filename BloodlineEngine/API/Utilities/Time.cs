@@ -5,12 +5,12 @@ namespace BloodlineEngine
 {
     public static class Time
     {
-        public static float ElapsedMilliseconds { get => m_Stopwatch.ElapsedMilliseconds; }
-        public static float ElapsedSeconds { get => (float)m_Stopwatch.Elapsed.TotalSeconds; }
+        public static float ElapsedMilliseconds => m_Stopwatch.ElapsedMilliseconds;
+        public static float ElapsedSeconds => (float)m_Stopwatch.Elapsed.TotalSeconds;
         public static float ElapsedTicks { get; private set; } = 0;
         public static float ElapsedFrames { get; private set; } = 0;
 
-        public static float DeltaTime { get => GetDeltaTimeMilliseconds() / 1000f; }
+        public static float DeltaTime => GetDeltaTimeMilliseconds() / 1000f;
         public static float GetDeltaTimeMilliseconds()
         {
             float deltaTime = ElapsedMilliseconds - m_LastFrameTime;

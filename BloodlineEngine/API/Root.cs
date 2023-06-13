@@ -2,13 +2,18 @@
 {
     public abstract class Root
     {
-        public Transform Transform { get; set; }
+        public Transform Transform
+        {
+            get => m_TransformComponent.Transform;
+            set => m_TransformComponent.Transform = value;
+        }
+        private BLTransformComponent m_TransformComponent { get; set; }
 
         private List<Component> m_LocalActiveComponents = new();
 
         public Root()
         {
-            Transform = AddComponent<Transform>();
+            m_TransformComponent = AddComponent<BLTransformComponent>();
         }
 
         public T GetComponent<T>() where T : Component, new()

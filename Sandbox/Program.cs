@@ -2,6 +2,35 @@
 
 namespace Sandbox
 {
+    class Whatever : Component
+    {
+        public override void Draw()
+        {
+            if (Root.GetComponent<BoxCollider>().IsColliding("Player"))
+            {
+                Root.GetComponent<Quad>().Color = (255, 0, 33);
+            }
+            else
+            {
+                Root.GetComponent<Quad>().Color = (255, 100, 255);
+            }
+        }
+    }
+
+    class Box : Root
+    {
+        public Box()
+        {
+            Transform.Position = 300f;
+            Transform.Rotation = 50f;
+            Transform.Scale = 50f;
+
+            AddComponent<Quad>();
+            AddComponent<BoxCollider>().Tag = "Wall";
+            AddComponent<Whatever>();
+        }
+    }
+
     class PlayerMovement : Component
     {
         public override void FixedUpdate()
@@ -15,9 +44,16 @@ namespace Sandbox
             if (Input.IsKeyPressed(System.Windows.Forms.Keys.A)) { direction.X = -1f; }
             if (Input.IsKeyPressed(System.Windows.Forms.Keys.D)) { direction.X = 1f; }
 
-            if (direction.X != 0f || direction.Y != 0f) { Transform.Rotation++; }
+            Vector2 move = direction * playerData.Speed * Time.DeltaTime;
+            Transform.Position.X += move.X;
+            //if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
+            //{ Transform.Position.X -= move.X; }
+            Transform.Position.Y += move.Y;
+            //if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
+            //{ Transform.Position.Y -= move.Y; }
 
-            Transform.Position += direction * playerData.Speed * Time.DeltaTime;
+
+            if (direction.X != 0f || direction.Y != 0f) { Transform.Rotation++; }
         }
     }
 
@@ -48,6 +84,7 @@ namespace Sandbox
             AddComponent<PlayerData>().Speed = 50f;
             AddComponent<PlayerMovement>();
             AddComponent<ColorScript>();
+            AddComponent<BoxCollider>().Tag = "Player";
         }
     }
 
@@ -55,10 +92,12 @@ namespace Sandbox
     {
         public Game(Vector2 size, string title) : base(size, title) { }
 
-        public Player Player;
+        public Player? Player;
+        public Box? Box;
 
         public override void Ready()
         {
+            Box = new Box();
             Player = new Player();
         }
     }

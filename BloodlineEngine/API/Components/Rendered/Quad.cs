@@ -4,7 +4,11 @@
     {
         public Color4 Color { get; set; }
 
-        public Quad() { Color = 0; }
+        public Vector2[] Vertices => Transform.Vertices;
 
+        public Quad()
+        {
+            Color = 0;
+        }
     }
 }
