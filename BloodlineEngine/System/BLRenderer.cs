@@ -16,6 +16,7 @@ namespace BloodlineEngine
             m_ActiveRenderedComponents.Clear();
         }
 
+        // TODO: Add layers based on Transform.Z.
         public void Render(object? sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;

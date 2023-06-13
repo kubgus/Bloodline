@@ -2,7 +2,7 @@
 {
     public static class Chance
     {
-        private static System.Random m_RandomClass = new();
+        private static Random m_RandomClass = new();
 
         public static float RandomFloat(float maxExclusive) { return RandomFloat(maxExc: maxExclusive); }
         public static float RandomFloat(float? minInc = null, float? maxExc = null)

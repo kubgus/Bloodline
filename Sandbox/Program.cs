@@ -48,16 +48,16 @@ namespace Sandbox
 
             Vector2 move = direction * playerData.Speed * Time.DeltaTime;
             Transform.Position.X += move.X;
-            //if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
-            //{ Transform.Position.X -= move.X; }
+            if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
+            { Transform.Position.X -= move.X; }
             Transform.Position.Y += move.Y;
-            //if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
-            //{ Transform.Position.Y -= move.Y; }
-            //if (!Root.GetComponent<BoxCollider>().IsColliding("Wall"))
-            //{
-            //    if (direction.X > 0f) { Transform.Rotation++; }
-            //    if (direction.X < 0f) { Transform.Rotation--; }
-            //}
+            if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
+            { Transform.Position.Y -= move.Y; }
+            if (!Root.GetComponent<BoxCollider>().IsColliding("Wall"))
+            {
+                if (direction.X > 0f) { Transform.Rotation++; }
+                if (direction.X < 0f) { Transform.Rotation--; }
+            }
         }
     }
 
@@ -83,7 +83,7 @@ namespace Sandbox
             Transform.Position = 30f;
             Transform.Scale = 30f;
 
-            AddComponent<Quad>().Color = (255,0,0);
+            AddComponent<Quad>().Color = (255, 0, 0);
 
             AddComponent<PlayerData>().Speed = 50f;
             AddComponent<PlayerMovement>();

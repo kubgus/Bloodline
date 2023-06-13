@@ -41,7 +41,7 @@
         public override string ToString() { return $"Color4({R},{G},{B},{A})"; }
 
         public static implicit operator Color4(int value)
-        { return new Color4(value, 1); }
+        { return new Color4(value, 255); }
         public static implicit operator Color4((int, int, int) value)
         { return new Color4(value.Item1, value.Item2, value.Item3, 255); }
         public static implicit operator Color4((int, int, int, int) value)

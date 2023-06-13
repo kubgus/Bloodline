@@ -58,6 +58,7 @@
         public virtual void Spark() { } // Runs after error checks before everything else
         public virtual void Draw() { } // Runs before drawing after Window is confirmed
         public virtual void Update() { } // Runs after drawing
+        // TODO: Add FixedDeltaTime.
         public virtual void FixedUpdate() { } // Runs 60 times per second
         public virtual void DebugShift() { } // Runs directly before the next frame's DebugTick
         public virtual void Halt() { } // Runs when the GameLoop ends
