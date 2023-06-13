@@ -1,4 +1,5 @@
-﻿using System.Drawing.Drawing2D;
+﻿using System.ComponentModel;
+using System.Drawing.Drawing2D;
 
 namespace BloodlineEngine
 {
@@ -28,6 +29,8 @@ namespace BloodlineEngine
 
             foreach (RenderedComponent renderedComponent in queue)
             {
+                if (!renderedComponent.IsActive) { continue; }
+
                 Vector2 origin = renderedComponent.Transform.Position + renderedComponent.Transform.Scale / 2f;
                 g.TranslateTransform(origin.X, origin.Y);
                 g.RotateTransform(renderedComponent.Transform.Rotation);

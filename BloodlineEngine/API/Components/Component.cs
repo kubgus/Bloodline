@@ -9,6 +9,17 @@
         }
         public Transform Transform { get => Root.Transform; set => Root.Transform = value; }
 
+        public bool IsActive { get; private set; } = true;
+        public void Enable() { 
+            if (IsActive) { Debug.Warn("Enabling a component that is already active!"); }
+            IsActive = true; 
+        }
+        public void Disable()
+        {
+            if (!IsActive) { Debug.Warn("Disabling a component that is already not active!"); }
+            IsActive = false;
+        }
+
         private Root? m_ActiveRoot;
 
         public delegate void BLComponentEventDelegate(Component component);

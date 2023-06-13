@@ -14,6 +14,8 @@ namespace Sandbox
             {
                 Root.GetComponent<Quad>().Color = (255, 100, 255);
             }
+
+            if (Input.IsMouseButtonPressed(System.Windows.Forms.MouseButtons.Left)) { Disable(); }
         }
     }
 
@@ -46,17 +48,16 @@ namespace Sandbox
 
             Vector2 move = direction * playerData.Speed * Time.DeltaTime;
             Transform.Position.X += move.X;
-            if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
-            { Transform.Position.X -= move.X; }
+            //if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
+            //{ Transform.Position.X -= move.X; }
             Transform.Position.Y += move.Y;
-            if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
-            { Transform.Position.Y -= move.Y; }
-
-            if (!Root.GetComponent<BoxCollider>().IsColliding("Wall"))
-            {
-                if (direction.X > 0f) { Transform.Rotation++; }
-                if (direction.X < 0f) { Transform.Rotation--; }
-            }
+            //if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
+            //{ Transform.Position.Y -= move.Y; }
+            //if (!Root.GetComponent<BoxCollider>().IsColliding("Wall"))
+            //{
+            //    if (direction.X > 0f) { Transform.Rotation++; }
+            //    if (direction.X < 0f) { Transform.Rotation--; }
+            //}
         }
     }
 

@@ -17,6 +17,7 @@ namespace BloodlineEngine
 
             foreach (Component component in queue)
             {
+                if (!component.IsActive) { continue; }
                 eventDelegate(component);
             }
         }
