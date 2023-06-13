@@ -75,5 +75,7 @@
         }
 
         public override string ToString() { return $"Transform2D({Position},{Scale},{Rotation})"; }
+
+        // TODO: Add operators.
     }
 }
