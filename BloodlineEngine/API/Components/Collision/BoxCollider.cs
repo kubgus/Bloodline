@@ -2,7 +2,8 @@
 {
     public class BoxCollider : CollisionComponent
     {
-        public string Tag { get; set; } = "BoxCollider";
+        public override string Tag { get; set; } = "BoxCollider";
+
         public Transform ModifiedTransform => new Transform(
                 Transform.Position + RelativeTransform.Position,
                 Transform.Scale + RelativeTransform.Scale,
@@ -10,22 +11,13 @@
                 Transform.Z + RelativeTransform.Z);
         public Transform RelativeTransform { get; set; } = new();
 
-        public bool IsColliding(string tag)
+        public override bool IsColliding(CollisionComponent other)
         {
-            foreach (BoxCollider boxCollider in BLGeneralComponentHandler.Get().OfType<BoxCollider>())
-            {
-                if (boxCollider.Tag != tag) { continue; }
-                return IsColliding(boxCollider);
-            }
+            if (other is BoxCollider boxCollider) { return IsColliding(boxCollider); }
             return false;
         }
 
-        public bool IsColliding(BoxCollider other)
-        {
-            Vector2[] thisVertices = ModifiedTransform.Vertices;
-            Vector2[] otherVertices = other.ModifiedTransform.Vertices;
-
-            return CheckPolygonCollision(thisVertices, otherVertices);
-        }
+        private bool IsColliding(BoxCollider other)
+        { return CheckPolygonCollision(ModifiedTransform.Vertices, other.ModifiedTransform.Vertices); }
     }
 }

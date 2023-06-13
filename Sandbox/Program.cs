@@ -46,14 +46,17 @@ namespace Sandbox
 
             Vector2 move = direction * playerData.Speed * Time.DeltaTime;
             Transform.Position.X += move.X;
-            //if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
-            //{ Transform.Position.X -= move.X; }
+            if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
+            { Transform.Position.X -= move.X; }
             Transform.Position.Y += move.Y;
-            //if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
-            //{ Transform.Position.Y -= move.Y; }
+            if (Root.GetComponent<BoxCollider>().IsColliding("Wall"))
+            { Transform.Position.Y -= move.Y; }
 
-
-            if (direction.X != 0f || direction.Y != 0f) { Transform.Rotation++; }
+            if (!Root.GetComponent<BoxCollider>().IsColliding("Wall"))
+            {
+                if (direction.X > 0f) { Transform.Rotation++; }
+                if (direction.X < 0f) { Transform.Rotation--; }
+            }
         }
     }
 

@@ -2,7 +2,20 @@
 {
     public abstract class CollisionComponent : Component
     {
-        public static bool CheckPolygonCollision(Vector2[] shapeA, Vector2[] shapeB)
+        public abstract string Tag { get; set; }
+
+        public abstract bool IsColliding(CollisionComponent other);
+        public bool IsColliding(string tag)
+        {
+            foreach (CollisionComponent collider in BLGeneralComponentHandler.Get().OfType<CollisionComponent>())
+            {
+                if (collider.Tag != tag) { continue; }
+                return IsColliding(collider);
+            }
+            return false;
+        }
+
+        protected static bool CheckPolygonCollision(Vector2[] shapeA, Vector2[] shapeB)
         {
             if (shapeA == null || shapeB == null || shapeA.Length < 3 || shapeB.Length < 3)
                 throw new ArgumentException("Input shapes must have at least three points.");
