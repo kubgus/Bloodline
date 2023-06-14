@@ -50,6 +50,13 @@ namespace Sandbox
             if (Input.IsKeyPressed(System.Windows.Forms.Keys.Down)) { RenderedCamera.Transform.Scale -= speed / 500f; }
             if (Input.IsKeyPressed(System.Windows.Forms.Keys.Right)) { RenderedCamera.Transform.Rotation += speed; }
             if (Input.IsKeyPressed(System.Windows.Forms.Keys.Left)) { RenderedCamera.Transform.Rotation -= speed; }
+            if (Input.IsKeyPressed(System.Windows.Forms.Keys.C)) { BLConsoleManager.CloseConsole(); }
+            else { BLConsoleManager.OpenConsole(); }
+
+            //if (Time.ElapsedFrames % 100 == 0) { BLConsoleManager.ToggleConsole(); }
+
+            if (Input.IsKeyPressed(System.Windows.Forms.Keys.Z))
+            { Debug.Error(Time.ElapsedMilliseconds); } // Just for fun
         }
     }
 

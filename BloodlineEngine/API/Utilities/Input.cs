@@ -10,6 +10,7 @@ namespace BloodlineEngine
         private static HashSet<Keys> m_ActiveKeys = new();
         private static HashSet<MouseButtons> m_ActiveMouseButtons = new();
 
+        // TODO: Toggle console on F5.
         public static void Press(Keys key) { m_ActiveKeys.Add(key); }
         public static void Press(object? sender, PreviewKeyDownEventArgs e) { Press(e.KeyCode); }
         public static void Release(Keys key) { m_ActiveKeys.Remove(key); }
@@ -31,5 +32,7 @@ namespace BloodlineEngine
         /// </summary>
         public static void BLModifyMousePosition(Vector2 position) { MousePosition = position; }
         public static void BLModifyMousePosition(object? sender, MouseEventArgs e) { BLModifyMousePosition((Vector2)e.Location); }
+
+        //private static void DebugToggle(Keys key) { if (key == Keys.F5) BLConsoleManager.ToggleConsole(); }
     }
 }

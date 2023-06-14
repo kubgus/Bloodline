@@ -13,6 +13,8 @@
 
         public BLApplication(Vector2 windowSize, string windowTitle = "Bloodline Application", bool windowResizable = false)
         {
+            BLConsoleManager.StartConsole();
+
             Window = new BLWindow(windowSize, windowTitle, windowResizable);
 
             m_MainThread = new Thread(MainLoop);
@@ -66,10 +68,14 @@
         public virtual void DebugShift() { } // Runs directly before the next frame's DebugTick
         public virtual void Halt() { } // Runs when the GameLoop ends
 
-        private void BLReady() { Ready(); BLGeneralComponentHandler.Run(Component.ReadyDelegate);
+        private void BLReady()
+        {
+            Ready(); BLGeneralComponentHandler.Run(Component.ReadyDelegate);
             Time.ResetTime();
         }
-        private void BLDebugSpark() { DebugSpark(); BLGeneralComponentHandler.Run(Component.DebugSparkDelegate);
+        private void BLDebugSpark()
+        {
+            DebugSpark(); BLGeneralComponentHandler.Run(Component.DebugSparkDelegate);
             Time.BLNextFrame();
         }
         private void BLSpark()
@@ -84,6 +90,5 @@
         { DebugShift(); BLGeneralComponentHandler.Run(Component.DebugShiftDelegate); }
         private void BLHalt()
         { Halt(); BLGeneralComponentHandler.Run(Component.HaltDelegate); }
-
     }
 }
