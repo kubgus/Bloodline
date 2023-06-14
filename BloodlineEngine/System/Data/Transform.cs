@@ -76,6 +76,11 @@
 
         public override string ToString() { return $"Transform2D({Position},{Scale},{Rotation})"; }
 
-        // TODO: Add operators.
+        public static Transform operator +(Transform left, Transform right) { return new Transform(
+            left.Position + right.Position,
+            left.Scale + right.Scale,
+            left.Rotation + right.Rotation,
+            left.Z + right.Z
+        ); }
     }
 }

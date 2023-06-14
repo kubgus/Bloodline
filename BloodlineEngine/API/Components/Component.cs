@@ -11,12 +11,12 @@
 
         public bool IsActive { get; private set; } = true;
         public void Enable() { 
-            if (IsActive) { Debug.Warn("Enabling a component that is already active!"); }
+            if (IsActive) { Debug.BLWarn("Enabling a component that is already active!"); }
             IsActive = true; 
         }
         public void Disable()
         {
-            if (!IsActive) { Debug.Warn("Disabling a component that is already not active!"); }
+            if (!IsActive) { Debug.BLWarn("Disabling a component that is already not active!"); }
             IsActive = false;
         }
 
@@ -51,14 +51,23 @@
         public virtual void DebugShift() { }
         public virtual void Halt() { }
 
-        private void BLReady() { Ready(); Debug.Assert(Root is not null, "Component root is null!"); }
-        private void BLDebugSpark() { DebugSpark(); }
-        private void BLSpark() { Spark(); }
-        private void BLDraw() { Draw(); }
-        private void BLUpdate() { Update(); }
-        private void BLFixedUpdate() { FixedUpdate(); }
-        private void BLDebugShift() { DebugShift(); }
-        private void BLHalt() { Halt(); }
+        protected virtual void BaseReady() { }
+        protected virtual void BaseDebugSpark() { }
+        protected virtual void BaseSpark() { }
+        protected virtual void BaseDraw() { }
+        protected virtual void BaseUpdate() { }
+        protected virtual void BaseFixedUpdate() { }
+        protected virtual void BaseDebugShift() { }
+        protected virtual void BaseHalt() { }
+
+        private void BLReady() { BaseReady(); Ready(); Debug.Assert(Root is not null, "Component root is null!"); }
+        private void BLDebugSpark() { BaseDebugSpark(); DebugSpark(); }
+        private void BLSpark() { BaseSpark(); Spark(); }
+        private void BLDraw() { BaseDraw(); Draw(); }
+        private void BLUpdate() { BaseUpdate(); Update(); }
+        private void BLFixedUpdate() { FixedUpdate(); FixedUpdate(); }
+        private void BLDebugShift() { BaseDebugShift(); DebugShift(); }
+        private void BLHalt() { BaseHalt(); Halt(); }
 
         public override string ToString() { return "Component()"; }
     }

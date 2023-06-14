@@ -17,7 +17,8 @@
             if (!resizable) { FormBorderStyle = FormBorderStyle.FixedToolWindow; }
 
             BackColor = Color.Magenta;
-            Icon = new Icon(File.OpenRead("Content/BloodlineLogo512.ico"));
+            try { Icon = new Icon(File.OpenRead("Content/BloodlineLogo512.ico")); }
+            catch { Debug.BLWarn("Program icon hasn't been loaded!"); }
 
             Opened = true;
             Active = true;

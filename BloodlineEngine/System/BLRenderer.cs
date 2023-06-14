@@ -1,11 +1,10 @@
-﻿using System.ComponentModel;
-using System.Drawing.Drawing2D;
+﻿using System.Drawing.Drawing2D;
 
 namespace BloodlineEngine
 {
     public class BLRenderer
     {
-        public Color ClearColor { get; set; } = Color.White;
+        public Color4 ClearColor { get; set; } = Color.White;
         public InterpolationMode InterpolationMode { get; set; } = InterpolationMode.NearestNeighbor;
         public PixelOffsetMode PixelOffsetMode { get; set; } = PixelOffsetMode.Half;
 
@@ -26,7 +25,7 @@ namespace BloodlineEngine
 
             g.Clear(ClearColor);
 
-            List<RenderedComponent> queue = Get();
+            List<RenderedComponent> queue = GetOrdered();
 
             foreach (RenderedComponent renderedComponent in queue)
             {
@@ -59,9 +58,9 @@ namespace BloodlineEngine
             m_ActiveRenderedComponents.Remove(component);
         }
 
-        private static List<RenderedComponent> Get()
+        private static List<RenderedComponent> GetOrdered()
         {
-            return m_ActiveRenderedComponents.ToList();
+            return m_ActiveRenderedComponents.OrderBy(renderedComponent => renderedComponent.Transform.Z).ToList();
         }
     }
 }

@@ -50,7 +50,7 @@
 
             BLHalt();
 
-            Application.Exit();
+            return; // Formerly Application.Exit()
         }
 
         public virtual void Ready() { } // Runs when the GameLoop starts

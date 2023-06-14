@@ -6,11 +6,7 @@
 
         public Transform RelativeTransform { get; set; } = new();
 
-        public Transform ModifiedTransform => new Transform(
-                Transform.Position + RelativeTransform.Position,
-                Transform.Scale + RelativeTransform.Scale,
-                Transform.Rotation + RelativeTransform.Rotation,
-                Transform.Z + RelativeTransform.Z);
+        public Transform ModifiedTransform => Transform + RelativeTransform;
 
         public override bool IsColliding(CollisionComponent other)
         {

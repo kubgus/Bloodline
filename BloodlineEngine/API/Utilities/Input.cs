@@ -1,4 +1,4 @@
-﻿// TODO: Allow clients to create custom event callback
+﻿// TODO: Allow clients to create custom event callback.
 
 namespace BloodlineEngine
 {
