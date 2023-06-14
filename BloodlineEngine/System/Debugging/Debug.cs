@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 
+// TODO: Toggle console.
+
 namespace BloodlineEngine
 {
     public static class Debug

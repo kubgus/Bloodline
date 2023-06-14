@@ -1,4 +1,6 @@
-﻿namespace BloodlineEngine
+﻿// TODO: Fix Transform issues. (relative positions don't work)
+
+namespace BloodlineEngine
 {
     public class Camera
     {
