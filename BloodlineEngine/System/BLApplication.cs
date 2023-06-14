@@ -3,6 +3,10 @@
     public abstract class BLApplication
     {
         public BLWindow Window { get; private set; }
+        public BLRenderer Renderer => Window.Renderer;
+
+        public Camera RenderedCamera => Renderer.Camera;
+        public Camera RendererCamera => Renderer.Camera;
 
         private bool m_Running;
         private Thread m_MainThread;
@@ -58,7 +62,6 @@
         public virtual void Spark() { } // Runs after error checks before everything else
         public virtual void Draw() { } // Runs before drawing after Window is confirmed
         public virtual void Update() { } // Runs after drawing
-        // TODO: Add FixedDeltaTime.
         public virtual void FixedUpdate() { } // Runs 60 times per second
         public virtual void DebugShift() { } // Runs directly before the next frame's DebugTick
         public virtual void Halt() { } // Runs when the GameLoop ends

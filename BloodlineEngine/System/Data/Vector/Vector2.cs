@@ -29,6 +29,8 @@
         { return left.X * right.X  + left.Y * right.Y; }
         public static float GetDistance(Vector2 value, Vector2 target)
         { return Magnitude(target - value); }
+        public static bool XorY(Vector2 left, Vector2 right)
+        { return left.X == right.X || left.Y == right.Y; }
         public static float GetRelativeAngle(Vector2 value, Vector2 target)
         { return (float)Math.Atan2(target.Y - value.Y, target.X - value.X); }
         public static Vector2 MoveInDirection(Vector2 value, Vector2 direction, float distance)

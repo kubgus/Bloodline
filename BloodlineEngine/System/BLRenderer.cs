@@ -4,14 +4,19 @@ namespace BloodlineEngine
 {
     public class BLRenderer
     {
+        public Camera Camera { get; set; } = new();
+
+        public Vector2 ScreenSize { get; private set; } = 0f;
         public Color4 ClearColor { get; set; } = Color.White;
         public InterpolationMode InterpolationMode { get; set; } = InterpolationMode.NearestNeighbor;
         public PixelOffsetMode PixelOffsetMode { get; set; } = PixelOffsetMode.Half;
 
         private static List<RenderedComponent> m_ActiveRenderedComponents = new();
 
-        public BLRenderer()
+        public BLRenderer(BLWindow window)
         {
+            ScreenSize = (Vector2)window.Size;
+
             m_ActiveRenderedComponents.Clear();
         }
 
@@ -30,10 +35,18 @@ namespace BloodlineEngine
             {
                 if (!renderedComponent.IsActive) { continue; }
 
-                Vector2 origin = renderedComponent.Transform.Position + renderedComponent.Transform.Scale / 2f;
-                g.TranslateTransform(origin.X, origin.Y);
+                Vector2 screenOrigin = ScreenSize / 2f;
+                g.TranslateTransform(-Camera.Transform.X + screenOrigin.X, -Camera.Transform.Y + screenOrigin.Y);
+                g.RotateTransform(Camera.Transform.Rotation);
+                g.ScaleTransform(
+                    Camera.Transform.Scale.X + 1f == 0f ? 1f / 1000000f : Camera.Transform.Scale.X + 1f,
+                    Camera.Transform.Scale.Y + 1f == 0f ? 1f / 1000000f : Camera.Transform.Scale.Y + 1f);
+                g.TranslateTransform(-screenOrigin.X, -screenOrigin.Y);
+
+                Vector2 componentOrigin = renderedComponent.Transform.Position + renderedComponent.Transform.Scale / 2f;
+                g.TranslateTransform(componentOrigin.X, componentOrigin.Y);
                 g.RotateTransform(renderedComponent.Transform.Rotation);
-                g.TranslateTransform(-origin.X, -origin.Y);
+                g.TranslateTransform(-componentOrigin.X, -componentOrigin.Y);
 
                 switch (renderedComponent)
                 {
