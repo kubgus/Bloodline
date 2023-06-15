@@ -13,7 +13,7 @@
 
         public BLApplication(Vector2 windowSize, string windowTitle = "Bloodline Application", bool windowResizable = false)
         {
-            BLConsoleManager.StartConsole();
+            Debug.StartConsole();
 
             Window = new BLWindow(windowSize, windowTitle, windowResizable);
 

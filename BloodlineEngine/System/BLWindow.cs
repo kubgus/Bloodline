@@ -18,7 +18,7 @@
 
             BackColor = Color.Magenta;
             try { Icon = new Icon(File.OpenRead("Content/BloodlineLogo512.ico")); }
-            catch { Debug.BLWarn("Program icon hasn't been loaded!"); }
+            catch { Debug.BLWarn("Could not load render window icon!"); }
 
             Opened = true;
             Active = true;
