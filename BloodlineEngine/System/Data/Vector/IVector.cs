@@ -1,7 +1,4 @@
 ﻿namespace BloodlineEngine
 {
-    public interface IVector : IBLToString
-    {
-
-    }
+    public interface IVector : IBLToString { }
 }

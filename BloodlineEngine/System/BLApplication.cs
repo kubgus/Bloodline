@@ -11,9 +11,10 @@
         private bool m_Running;
         private Thread m_MainThread;
 
-        public BLApplication(Vector2 windowSize, string windowTitle = "Bloodline Application", bool windowResizable = false)
+        public BLApplication(Vector2 windowSize, string windowTitle = "Bloodline Application",
+            bool lauchWithConsoleShown = false, bool windowResizable = false)
         {
-            Debug.StartConsole();
+            if (lauchWithConsoleShown) Debug.StartConsole();
 
             Window = new BLWindow(windowSize, windowTitle, windowResizable);
 

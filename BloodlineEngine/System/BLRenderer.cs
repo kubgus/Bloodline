@@ -36,17 +36,12 @@ namespace BloodlineEngine
                 if (!renderedComponent.IsActive) { continue; }
 
                 Vector2 screenOrigin = ScreenSize / 2f;
-                g.TranslateTransform(-Camera.Transform.X + screenOrigin.X, -Camera.Transform.Y + screenOrigin.Y);
+                g.TranslateTransform(screenOrigin.X, screenOrigin.Y);
                 g.RotateTransform(Camera.Transform.Rotation);
                 g.ScaleTransform(
                     Camera.Transform.Scale.X + 1f == 0f ? 1f / 1000000f : Camera.Transform.Scale.X + 1f,
                     Camera.Transform.Scale.Y + 1f == 0f ? 1f / 1000000f : Camera.Transform.Scale.Y + 1f);
-                g.TranslateTransform(-screenOrigin.X, -screenOrigin.Y);
-
-                Vector2 componentOrigin = renderedComponent.Transform.Position + renderedComponent.Transform.Scale / 2f;
-                g.TranslateTransform(componentOrigin.X, componentOrigin.Y);
-                g.RotateTransform(renderedComponent.Transform.Rotation);
-                g.TranslateTransform(-componentOrigin.X, -componentOrigin.Y);
+                g.TranslateTransform(-Camera.Transform.X - screenOrigin.X, -Camera.Transform.Y - screenOrigin.Y);
 
                 switch (renderedComponent)
                 {

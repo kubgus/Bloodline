@@ -32,13 +32,14 @@
         public static bool XorY(Vector2 left, Vector2 right)
         { return left.X == right.X || left.Y == right.Y; }
         public static float GetRelativeAngle(Vector2 value, Vector2 target)
-        { return (float)Math.Atan2(target.Y - value.Y, target.X - value.X); }
+        { return (float)Math.Atan2(target.Y - value.Y, target.X - value.X) * Numf.RadToDeg; }
         public static Vector2 MoveInDirection(Vector2 value, Vector2 direction, float distance)
         { return value + Normalize(direction) * distance; }
         public static Vector2 MoveInDirection(Vector2 value, float angle, float distance)
         {
-            float x = (float)Math.Cos(angle) * distance;
-            float y = (float)Math.Sin(angle) * distance;
+            float radians = angle * Numf.DegToRad;
+            float x = (float)Math.Cos(radians) * distance;
+            float y = (float)Math.Sin(radians) * distance;
             return value + new Vector2(x, y);
         }
         public static Vector2 MoveTowards(Vector2 value, Vector2 target, float maxDistanceDelta)

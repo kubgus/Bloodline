@@ -14,7 +14,7 @@ namespace Sandbox
 
     class Game : BLApplication
     {
-        public Game(Vector2 size, string title) : base(size, title) { }
+        public Game(Vector2 size, string title) : base(size, title, lauchWithConsoleShown: true) { }
 
         List<Dot> dots = new();
         float speed = 10f;
@@ -42,21 +42,19 @@ namespace Sandbox
 
         public override void Update()
         {
-            if (Input.IsKeyPressed(System.Windows.Forms.Keys.W)) { RenderedCamera.Transform.Position.Y -= speed; }
-            if (Input.IsKeyPressed(System.Windows.Forms.Keys.S)) { RenderedCamera.Transform.Position.Y += speed; }
-            if (Input.IsKeyPressed(System.Windows.Forms.Keys.A)) { RenderedCamera.Transform.Position.X -= speed; }
-            if (Input.IsKeyPressed(System.Windows.Forms.Keys.D)) { RenderedCamera.Transform.Position.X += speed; }
+            if (Input.IsKeyPressed(System.Windows.Forms.Keys.W)) { RenderedCamera.Move((0f, -speed)); }
+            if (Input.IsKeyPressed(System.Windows.Forms.Keys.S)) { RenderedCamera.Move((0f, speed)); }
+            if (Input.IsKeyPressed(System.Windows.Forms.Keys.A)) { RenderedCamera.Move((-speed, 0f)); }
+            if (Input.IsKeyPressed(System.Windows.Forms.Keys.D)) { RenderedCamera.Move((speed, 0f)); }
             if (Input.IsKeyPressed(System.Windows.Forms.Keys.Up)) { RenderedCamera.Transform.Scale += speed / 500f; }
             if (Input.IsKeyPressed(System.Windows.Forms.Keys.Down)) { RenderedCamera.Transform.Scale -= speed / 500f; }
-            if (Input.IsKeyPressed(System.Windows.Forms.Keys.Right)) { RenderedCamera.Transform.Rotation += speed; }
-            if (Input.IsKeyPressed(System.Windows.Forms.Keys.Left)) { RenderedCamera.Transform.Rotation -= speed; }
-            if (Input.IsKeyPressed(System.Windows.Forms.Keys.C)) { Debug.CloseConsole(); }
-            else { Debug.OpenConsole(); }
+            if (Input.IsKeyPressed(System.Windows.Forms.Keys.Right)) { RenderedCamera.Transform.Rotation += speed / 5f; }
+            if (Input.IsKeyPressed(System.Windows.Forms.Keys.Left)) { RenderedCamera.Transform.Rotation -= speed / 5f; }
 
             //if (Time.ElapsedFrames % 100 == 0) { BLConsoleManager.ToggleConsole(); }
 
             if (Input.IsKeyPressed(System.Windows.Forms.Keys.Z))
-            { Debug.Error(Time.ElapsedMilliseconds); } // Just for fun
+            { Debug.Trace(Time.ElapsedMilliseconds); } // Just for fun
         }
     }
 
