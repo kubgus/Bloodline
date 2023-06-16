@@ -49,9 +49,9 @@
             if (magnitude <= maxDistanceDelta || magnitude == 0f) { return target; }
             return value + direction / magnitude * maxDistanceDelta;
         }
-        public static Vector2 RotateVertex(Vector2 vertex, Vector2 center, float rotationInDeg)
+        public static Vector2 RotateVertex(Vector2 vertex, Vector2 center, float angle)
         {
-            float rotation = rotationInDeg * Numf.DegToRad;
+            float rotation = angle * Numf.DegToRad;
             float cos = MathF.Cos(rotation);
             float sin = MathF.Sin(rotation);
             float translatedX = vertex.X - center.X;

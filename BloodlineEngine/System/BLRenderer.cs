@@ -43,6 +43,11 @@ namespace BloodlineEngine
                     Camera.Transform.Scale.Y + 1f == 0f ? 1f / 1000000f : Camera.Transform.Scale.Y + 1f);
                 g.TranslateTransform(-Camera.Transform.X - screenOrigin.X, -Camera.Transform.Y - screenOrigin.Y);
 
+                Vector2 componentOrigin = renderedComponent.Transform.Position + renderedComponent.Transform.Scale / 2f;
+                g.TranslateTransform(componentOrigin.X, componentOrigin.Y);
+                g.RotateTransform(renderedComponent.Transform.Rotation);
+                g.TranslateTransform(-componentOrigin.X, -componentOrigin.Y);
+
                 switch (renderedComponent)
                 {
                     case Quad r:
