@@ -12,7 +12,7 @@ namespace BloodlineEngine
 
         public static float DeltaTime => GetDeltaTimeMilliseconds() / 1000f;
         public static float FixedDeltaTime { get; private set; } = (float)m_TickInterval / 1000f;
-        private static double m_TickInterval = 16;
+        private static double m_TickInterval = 20;
 
         public static float GetDeltaTimeMilliseconds()
         {

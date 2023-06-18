@@ -18,6 +18,8 @@ namespace Sandbox
 
         List<Dot> dots = new();
         float speed = 10f;
+        int frames = 0;
+        float time = 0f;
 
         public override void Ready()
         {
@@ -35,7 +37,7 @@ namespace Sandbox
             for (int i = 0; i < dots.Count; i++)
             {
                 Dot dot = dots[i];
-                float time = Time.ElapsedMilliseconds / 500000f;
+                float time = Time.ElapsedMilliseconds / 50000f;
                 dot.Transform.Center = (i * (512f / dots.Count), MathF.Sin(time * i) * 100f + 256f);
             }
         }
@@ -54,7 +56,18 @@ namespace Sandbox
             //if (Time.ElapsedFrames % 100 == 0) { BLConsoleManager.ToggleConsole(); }
 
             if (Input.IsKeyPressed(System.Windows.Forms.Keys.Z))
-            { Debug.Trace(Time.ElapsedMilliseconds); } // Just for fun
+            { Debug.Trace(1f / Time.DeltaTime + "FPS"); } // FPS
+        }
+
+        public override void FixedUpdate()
+        {
+            frames++;
+            if ((int)Time.ElapsedSeconds > (int)time)
+            {
+                Debug.Trace(frames);
+                frames = 0;
+            }
+            time = Time.ElapsedSeconds;
         }
     }
 
