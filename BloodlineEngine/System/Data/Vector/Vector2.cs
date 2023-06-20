@@ -13,6 +13,7 @@
 
         public float Mag => Magnitude(this);
         public Vector2 Normalized => Normalize(this);
+        public float Ang => Angle(this);
         public Vector2 Absolute => Abs(this);
 
         public static Vector2 Zero()
@@ -21,18 +22,20 @@
         { return (float)Math.Sqrt(value.X * value.X + value.Y * value.Y); }
         public static Vector2 Normalize(Vector2 value)
         { return value / Magnitude(value); }
+        public static float GetDistance(Vector2 value, Vector2 target)
+        { return Magnitude(target - value); }
+        public static float Angle(Vector2 value)
+        { return (float)Math.Atan2(value.Y, value.X) * Numf.RadToDeg; }
+        public static float RelativeAngle(Vector2 value, Vector2 target)
+        { return Angle(target - value); }
         public static Vector2 Abs(Vector2 value)
         { return new Vector2(Math.Abs(value.X), Math.Abs(value.Y)); }
         public static Vector2 Pow(Vector2 value, double power)
         { return new Vector2((float)Math.Pow(value.X, power), (float)Math.Pow(value.Y, power)); }
         public static float Dot(Vector2 left, Vector2 right)
         { return left.X * right.X  + left.Y * right.Y; }
-        public static float GetDistance(Vector2 value, Vector2 target)
-        { return Magnitude(target - value); }
         public static bool XorY(Vector2 left, Vector2 right)
         { return left.X == right.X || left.Y == right.Y; }
-        public static float GetRelativeAngle(Vector2 value, Vector2 target)
-        { return (float)Math.Atan2(target.Y - value.Y, target.X - value.X) * Numf.RadToDeg; }
         public static Vector2 MoveInDirection(Vector2 value, Vector2 direction, float distance)
         { return value + Normalize(direction) * distance; }
         public static Vector2 MoveInDirection(Vector2 value, float angle, float distance)

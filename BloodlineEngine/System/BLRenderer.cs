@@ -37,11 +37,11 @@ namespace BloodlineEngine
 
                 Vector2 screenOrigin = ScreenSize / 2f;
                 g.TranslateTransform(screenOrigin.X, screenOrigin.Y);
-                g.RotateTransform(Camera.Transform.Rotation);
+                g.RotateTransform(Camera.Rotation);
                 g.ScaleTransform(
-                    Camera.Transform.Scale.X + 1f == 0f ? 1f / 1000000f : Camera.Transform.Scale.X + 1f,
-                    Camera.Transform.Scale.Y + 1f == 0f ? 1f / 1000000f : Camera.Transform.Scale.Y + 1f);
-                g.TranslateTransform(-Camera.Transform.X - screenOrigin.X, -Camera.Transform.Y - screenOrigin.Y);
+                    Camera.Scale.X + 1f == 0f ? 1f / 1000000f : Camera.Scale.X + 1f,
+                    Camera.Scale.Y + 1f == 0f ? 1f / 1000000f : Camera.Scale.Y + 1f);
+                g.TranslateTransform(-Camera.Position.X - screenOrigin.X, -Camera.Position.Y - screenOrigin.Y);
 
                 Vector2 componentOrigin = renderedComponent.Transform.Position + renderedComponent.Transform.Scale / 2f;
                 g.TranslateTransform(componentOrigin.X, componentOrigin.Y);

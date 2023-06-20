@@ -32,6 +32,8 @@ namespace Sandbox
 
         public Character? Player;
 
+        private float Speed = 10f;
+
         public override void Ready()
         {
             Player = new Character();
@@ -41,7 +43,14 @@ namespace Sandbox
 
         public override void Update()
         {
-            RendererCamera.MoveTo(Player.Transform.Center - 256f);
+            if (Input.IsKeyPressed(Keys.W)) { RenderedCamera.MoveRotated((0f, -Speed)); }
+            if (Input.IsKeyPressed(Keys.S)) { RenderedCamera.MoveRotated((0f, Speed)); }
+            if (Input.IsKeyPressed(Keys.A)) { RenderedCamera.MoveRotated((-Speed, 0f)); }
+            if (Input.IsKeyPressed(Keys.D)) { RenderedCamera.MoveRotated((Speed, 0f)); }
+            if (Input.IsKeyPressed(Keys.Up)) { RenderedCamera.Scale += Speed / 500f; }
+            if (Input.IsKeyPressed(Keys.Down)) { RenderedCamera.Scale -= Speed / 500f; }
+            if (Input.IsKeyPressed(Keys.Right)) { RenderedCamera.Rotation += Speed / 5f; }
+            if (Input.IsKeyPressed(Keys.Left)) { RenderedCamera.Rotation -= Speed / 5f; }
         }
     }
 
