@@ -11,9 +11,9 @@
 
         public Vector2 Copy() { return new Vector2(X, Y); }
 
-        public float Magnituded => Magnitude(this);
+        public float Mag => Magnitude(this);
         public Vector2 Normalized => Normalize(this);
-        public Vector2 Absoluted => Abs(this);
+        public Vector2 Absolute => Abs(this);
 
         public static Vector2 Zero()
         { return new Vector2(0, 0); }
