@@ -24,8 +24,8 @@ namespace BloodlineEngine
 
         public void Move(Vector2 direction)
         { Position += direction; }
-        public void MoveRotated(Vector2 direction) // TODO: Fix this
-        { Center = Vector2.MoveInDirection(Center, Rotation + direction.Ang, direction.Mag); }
+        public void MoveRotated(Vector2 direction)
+        { Center = Vector2.MoveInDirection(Center, direction.Angle - Rotation, direction.Magnitude); }
 
         // Effects and other properties go here!
     }

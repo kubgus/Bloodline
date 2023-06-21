@@ -7,10 +7,6 @@ namespace Sandbox
     {
         public override void Update()
         {
-            if (Input.IsKeyPressed(Keys.W)) { Transform.Y -= 5f; }
-            if (Input.IsKeyPressed(Keys.S)) { Transform.Y += 5f; }
-            if (Input.IsKeyPressed(Keys.A)) { Transform.X -= 5f; }
-            if (Input.IsKeyPressed(Keys.D)) { Transform.X += 5f; }
         }
     }
 
@@ -47,10 +43,8 @@ namespace Sandbox
             if (Input.IsKeyPressed(Keys.S)) { RenderedCamera.MoveRotated((0f, Speed)); }
             if (Input.IsKeyPressed(Keys.A)) { RenderedCamera.MoveRotated((-Speed, 0f)); }
             if (Input.IsKeyPressed(Keys.D)) { RenderedCamera.MoveRotated((Speed, 0f)); }
-            if (Input.IsKeyPressed(Keys.Up)) { RenderedCamera.Scale += Speed / 500f; }
-            if (Input.IsKeyPressed(Keys.Down)) { RenderedCamera.Scale -= Speed / 500f; }
-            if (Input.IsKeyPressed(Keys.Right)) { RenderedCamera.Rotation += Speed / 5f; }
-            if (Input.IsKeyPressed(Keys.Left)) { RenderedCamera.Rotation -= Speed / 5f; }
+            if (Input.IsKeyPressed(Keys.Right)) { RenderedCamera.Rotation -= Speed / 5f; }
+            if (Input.IsKeyPressed(Keys.Left)) { RenderedCamera.Rotation += Speed / 5f; }
         }
     }
 

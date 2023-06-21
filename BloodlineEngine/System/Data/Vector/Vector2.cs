@@ -11,23 +11,23 @@
 
         public Vector2 Copy() { return new Vector2(X, Y); }
 
-        public float Mag => Magnitude(this);
+        public float Magnitude => Mag(this);
         public Vector2 Normalized => Normalize(this);
-        public float Ang => Angle(this);
+        public float Angle => Ang(this);
         public Vector2 Absolute => Abs(this);
 
         public static Vector2 Zero()
         { return new Vector2(0, 0); }
-        public static float Magnitude(Vector2 value)
+        public static float Mag(Vector2 value)
         { return (float)Math.Sqrt(value.X * value.X + value.Y * value.Y); }
         public static Vector2 Normalize(Vector2 value)
-        { return value / Magnitude(value); }
+        { return value / Mag(value); }
         public static float GetDistance(Vector2 value, Vector2 target)
-        { return Magnitude(target - value); }
-        public static float Angle(Vector2 value)
+        { return Mag(target - value); }
+        public static float Ang(Vector2 value)
         { return (float)Math.Atan2(value.Y, value.X) * Numf.RadToDeg; }
         public static float RelativeAngle(Vector2 value, Vector2 target)
-        { return Angle(target - value); }
+        { return Ang(target - value); }
         public static Vector2 Abs(Vector2 value)
         { return new Vector2(Math.Abs(value.X), Math.Abs(value.Y)); }
         public static Vector2 Pow(Vector2 value, double power)
@@ -48,7 +48,7 @@
         public static Vector2 MoveTowards(Vector2 value, Vector2 target, float maxDistanceDelta)
         {
             Vector2 direction = target - value;
-            float magnitude = Magnitude(direction);
+            float magnitude = Mag(direction);
             if (magnitude <= maxDistanceDelta || magnitude == 0f) { return target; }
             return value + direction / magnitude * maxDistanceDelta;
         }
