@@ -26,7 +26,7 @@ namespace BloodlineEngine
             return component ?? CreateComponent<T>();
         }
 
-        /// <returns>The component.</returns>
+        /// <returns>The created component.</returns>
         public T CreateComponent<T>() where T : Component, new()
         {
             Debug.Assert(m_LocalActiveComponents.Find(x => x is T) is null, "This component already exists!");
