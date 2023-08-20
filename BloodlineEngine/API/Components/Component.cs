@@ -9,6 +9,13 @@
         }
         public Transform Transform { get => Root.Transform; set => Root.Transform = value; }
 
+        public ComponentArgs Args { get; set; } = new();
+        public object this[string key]
+        {
+            get => Args[key];
+            set => Args[key] = value;
+        }
+
         public bool IsActive { get; private set; } = true;
         public void Enable() { 
             if (IsActive) { Debug.BLWarn("Enabling a component that is already active!"); }

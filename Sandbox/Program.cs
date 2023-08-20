@@ -7,6 +7,14 @@ namespace Sandbox
     {
         public override void Update()
         {
+            float speed = 10f;
+            Camera renderedCamera = (Camera)this["Camera"];
+            if (Input.IsKeyPressed(Keys.W)) { renderedCamera.MoveRotated((0f, -speed)); }
+            if (Input.IsKeyPressed(Keys.S)) { renderedCamera.MoveRotated((0f, speed)); }
+            if (Input.IsKeyPressed(Keys.A)) { renderedCamera.MoveRotated((-speed, 0f)); }
+            if (Input.IsKeyPressed(Keys.D)) { renderedCamera.MoveRotated((speed, 0f)); }
+            if (Input.IsKeyPressed(Keys.Right)) { renderedCamera.Rotation -= speed / 5f; }
+            if (Input.IsKeyPressed(Keys.Left)) { renderedCamera.Rotation += speed / 5f; }
         }
     }
 
@@ -17,8 +25,8 @@ namespace Sandbox
             Transform.Scale = 30f;
             Transform.Center = 256f;
 
-            AddComponent<Quad>().Color = (255, 255, 100);
-            AddComponent<PlayerMovement>();
+            CreateComponent<Quad>().Color = (255, 255, 100);
+            CreateComponent<PlayerMovement>();
         }
     }
 
@@ -28,23 +36,12 @@ namespace Sandbox
 
         public Character? Player;
 
-        private float Speed = 10f;
-
         public override void Ready()
         {
-            Player = new Character();
-
             Renderer.ClearColor = (100, 100, 255);
-        }
 
-        public override void Update()
-        {
-            if (Input.IsKeyPressed(Keys.W)) { RenderedCamera.MoveRotated((0f, -Speed)); }
-            if (Input.IsKeyPressed(Keys.S)) { RenderedCamera.MoveRotated((0f, Speed)); }
-            if (Input.IsKeyPressed(Keys.A)) { RenderedCamera.MoveRotated((-Speed, 0f)); }
-            if (Input.IsKeyPressed(Keys.D)) { RenderedCamera.MoveRotated((Speed, 0f)); }
-            if (Input.IsKeyPressed(Keys.Right)) { RenderedCamera.Rotation -= Speed / 5f; }
-            if (Input.IsKeyPressed(Keys.Left)) { RenderedCamera.Rotation += Speed / 5f; }
+            Player = new Character();
+            Player.GetComponent<PlayerMovement>()["Camera"] = RenderedCamera;
         }
     }
 
