@@ -7,26 +7,24 @@ namespace Sandbox
     {
         public override void Update()
         {
-            float speed = 10f;
-            Camera renderedCamera = (Camera)this["Camera"];
-            if (Input.IsKeyPressed(Keys.W)) { renderedCamera.MoveRotated((0f, -speed)); }
-            if (Input.IsKeyPressed(Keys.S)) { renderedCamera.MoveRotated((0f, speed)); }
-            if (Input.IsKeyPressed(Keys.A)) { renderedCamera.MoveRotated((-speed, 0f)); }
-            if (Input.IsKeyPressed(Keys.D)) { renderedCamera.MoveRotated((speed, 0f)); }
-            if (Input.IsKeyPressed(Keys.Right)) { renderedCamera.Rotation -= speed / 5f; }
-            if (Input.IsKeyPressed(Keys.Left)) { renderedCamera.Rotation += speed / 5f; }
+            float speed = (float)this["Speed"];
+            if (Input.IsKeyPressed(Keys.W)) { Transform.Position.Y -= speed; }
+            if (Input.IsKeyPressed(Keys.S)) { Transform.Position.Y += speed; }
+            if (Input.IsKeyPressed(Keys.A)) { Transform.Position.X -= speed; }
+            if (Input.IsKeyPressed(Keys.D)) { Transform.Position.X += speed; }
         }
     }
 
-    class Character : Root
+    class Player : Root
     {
-        public Character()
+        public override void Init()
         {
-            Transform.Scale = 30f;
-            Transform.Center = 256f;
-
-            CreateComponent<Quad>().Color = (255, 255, 100);
-            CreateComponent<PlayerMovement>();
+            CreateComponent<Quad>()
+                .Col((202, 100, 50))
+                .Pos(100)
+                .Scl(50);
+            CreateComponent<PlayerMovement>()
+                .Arg("Speed", Await("Speed"));
         }
     }
 
@@ -34,14 +32,14 @@ namespace Sandbox
     {
         public Game() : base(512f, "Minigame", lauchWithConsoleShown: true) { }
 
-        public Character? Player;
+        float PlayerSpeed = 5f;
+
+        Player Player;
 
         public override void Ready()
         {
-            Renderer.ClearColor = (100, 100, 255);
-
-            Player = new Character();
-            Player.GetComponent<PlayerMovement>()["Camera"] = RenderedCamera;
+            Player = (Player)new Player()
+                .Pass("Speed", PlayerSpeed);
         }
     }
 

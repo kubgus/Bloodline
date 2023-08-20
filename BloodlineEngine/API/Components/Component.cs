@@ -8,6 +8,9 @@
             set => m_ActiveRoot = value;
         }
         public Transform Transform { get => Root.Transform; set => Root.Transform = value; }
+        public Component Pos(Vector2 value) { Transform.Position = value; return this; }
+        public Component Ctr(Vector2 value) { Transform.Center = value; return this; }
+        public Component Scl(Vector2 value) { Transform.Scale = value; return this; }
 
         public ComponentArgs Args { get; set; } = new();
         public object this[string key]
@@ -15,6 +18,7 @@
             get => Args[key];
             set => Args[key] = value;
         }
+        public Component Arg(string key, object value) { this[key] = value; return this; }
 
         public bool IsActive { get; private set; } = true;
         public void Enable() { 

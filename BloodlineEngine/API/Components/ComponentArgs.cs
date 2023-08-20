@@ -16,7 +16,7 @@
             set => m_CustomArgs[key] = value;
         }
 
-        public T Get<T>(string key) { return (T)m_CustomArgs[key]; }
+        public T Get<T>(string key) { return (T)this[key]; }
         public ComponentArgs Set(Dictionary<string, object> customArgs) { m_CustomArgs = customArgs; return this; }
         public ComponentArgs Copy() { return new ComponentArgs().Set(m_CustomArgs); }
         public IEnumerable<string> GetKeys() { return m_CustomArgs.Keys; }

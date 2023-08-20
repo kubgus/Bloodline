@@ -8,5 +8,7 @@
         {
             Color = 0;
         }
+
+        public Quad Col(Color4 color) { Color =  color; return this; }
     }
 }
