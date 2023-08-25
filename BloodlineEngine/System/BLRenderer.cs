@@ -51,8 +51,10 @@ namespace BloodlineEngine
                 switch (renderedComponent)
                 {
                     case Quad r:
-                        g.FillRectangle(new SolidBrush(r.Color), r.Transform.X, r.Transform.Y,
-                            r.Transform.Scale.X, r.Transform.Scale.Y);
+                        g.FillRectangle(new SolidBrush(r.Color), r.Transform.X, r.Transform.Y, r.Transform.Scale.X, r.Transform.Scale.Y);
+                        break;
+                    case Sprite r:
+                        g.DrawImage(r.Bitmap, r.Transform.Position.X, r.Transform.Position.Y, r.Transform.Scale.X, r.Transform.Scale.Y);
                         break;
                 }
 

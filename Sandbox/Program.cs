@@ -1,5 +1,4 @@
 ﻿using BloodlineEngine;
-using System.Windows.Forms;
 
 namespace Sandbox
 {
@@ -62,8 +61,8 @@ namespace Sandbox
     {
         public override void Init()
         {
-            CreateComponent<Quad>()
-                .Col((202, 100, 50))
+            CreateComponent<Sprite>()
+                .Bmp(new Bitmap("Assets/test.png"))
                 .Pos(100)
                 .Scl(50);
             CreateComponent<PlayerCollider>()
