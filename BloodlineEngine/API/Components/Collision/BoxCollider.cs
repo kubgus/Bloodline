@@ -16,6 +16,6 @@
         }
 
         private bool IsColliding(BoxCollider other)
-        { return CheckPolygonCollision(ModifiedTransform.Vertices, other.ModifiedTransform.Vertices); }
+        { return Collision.CheckPolygonCollision(ModifiedTransform.Vertices, other.ModifiedTransform.Vertices); }
     }
 }

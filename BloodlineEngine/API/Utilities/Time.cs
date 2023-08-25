@@ -11,8 +11,14 @@ namespace BloodlineEngine
         public static float ElapsedFrames { get; private set; } = 0;
 
         public static float DeltaTime => GetDeltaTimeMilliseconds() / 1000f;
+        public static float FPS => 1000f / DeltaTime / 1000f;
+
+        private static readonly double m_TickInterval = 20;
         public static float FixedDeltaTime { get; private set; } = (float)m_TickInterval / 1000f;
-        private static double m_TickInterval = 20;
+
+        private static Stopwatch m_Stopwatch = new();
+        private static System.Timers.Timer m_Timer = new(m_TickInterval);
+        private static float m_LastFrameTime = 0f;
 
         public static float GetDeltaTimeMilliseconds()
         {
@@ -22,10 +28,6 @@ namespace BloodlineEngine
         }
 
         public static event EventHandler? FixedUpdate;
-
-        private static Stopwatch m_Stopwatch = new();
-        private static System.Timers.Timer m_Timer = new(m_TickInterval);
-        private static float m_LastFrameTime;
 
         public static void ResetTime () { m_Stopwatch.Reset(); m_Stopwatch.Start(); m_Timer.Elapsed += Tick; m_Timer.Start(); }
 

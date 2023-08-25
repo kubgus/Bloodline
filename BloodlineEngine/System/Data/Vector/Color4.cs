@@ -28,19 +28,37 @@ namespace BloodlineEngine
             B = rgb;
             A = a;
         }
+        public Color4(string hex)
+        {
+            Color4 color = FromHex(hex);
+            R = color.R;
+            G = color.G;
+            B = color.B;
+            A = color.A;
+        }
         public Color4()
         {
-            R = Zero().R;
-            G = Zero().G;
-            B = Zero().B;
-            A = Zero().A;
+            Color4 zero = Zero();
+            R = zero.R;
+            G = zero.G;
+            B = zero.B;
+            A = zero.A;
         }
 
         public Color4 Copy() { return new Color4(R, G, B, A); }
 
         public static Color4 Zero() { return new Color4(0, 0, 0, 0); }
         /// <param name="hex">Hexadecimal value without "#". (i.e.: "000000")</param>
-        public static Color4 FromHex(string hex) { return Color.FromArgb(int.Parse(hex, NumberStyles.HexNumber)); }
+        public static Color4 FromHex(string hex)
+        {
+            try
+            {
+                Color4 color = Color.FromArgb(int.Parse(hex, NumberStyles.HexNumber));
+                color.A = 255;
+                return color;
+            }
+            catch { Debug.BLWarn("Hex color parameter incorrect! Defaulting to magenta."); return Color.Magenta; }
+        }
 
         public override string ToString() { return $"Color4({R},{G},{B},{A})"; }
 
@@ -61,5 +79,7 @@ namespace BloodlineEngine
         { return Color.FromArgb(value.A, value.R, value.G, value.B); }
         public static implicit operator Color4(Color value)
         { return new Color4(value.R, value.G, value.B, value.A); }
+        public static implicit operator Color4(string hex)
+        { return FromHex(hex); }
     }
 }

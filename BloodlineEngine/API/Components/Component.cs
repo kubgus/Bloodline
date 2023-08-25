@@ -8,9 +8,10 @@
             set => m_ActiveRoot = value;
         }
         public Transform Transform { get => Root.Transform; set => Root.Transform = value; }
-        public Component Pos(Vector2 value) { Transform.Position = value; return this; }
-        public Component Ctr(Vector2 value) { Transform.Center = value; return this; }
-        public Component Scl(Vector2 value) { Transform.Scale = value; return this; }
+        public Component Pos(Vector2 position) { Transform.Position = position; return this; }
+        public Component Ctr(Vector2 center) { Transform.Center = center; return this; }
+        public Component Scl(Vector2 scale) { Transform.Scale = scale; return this; }
+        public Component Rot(float rotation) { Transform.Rotation = rotation; return this; }
 
         public bool IsActive { get; private set; } = true;
         public void Enable() { 
@@ -68,7 +69,7 @@
         private void BLSpark() { BaseSpark(); Spark(); }
         private void BLDraw() { BaseDraw(); Draw(); }
         private void BLUpdate() { BaseUpdate(); Update(); }
-        private void BLFixedUpdate() { FixedUpdate(); FixedUpdate(); }
+        private void BLFixedUpdate() { BaseFixedUpdate(); FixedUpdate(); }
         private void BLDebugShift() { BaseDebugShift(); DebugShift(); }
         private void BLHalt() { BaseHalt(); Halt(); }
 

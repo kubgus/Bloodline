@@ -1,0 +1,63 @@
+﻿namespace BloodlineEngine
+{
+    public class PhysicsBody : Component
+    {
+        public Vector2 Velocity { get; set; } = 0f;
+        public float Gravity { get; set; } = 0f;
+        /// <summary>
+        /// Horizontal slow-down of an object.
+        /// </summary>
+        public float Drag { get; set; } = 0f;
+
+        public PhysicsBody Vel(Vector2 velocity) { Velocity = velocity; return this; }
+        public PhysicsBody Gra(float gravity) { Gravity = gravity; return this; }
+        public PhysicsBody Dra(float drag) { Drag = drag; return this; }
+
+        protected Func<bool> BeforePhysics { get; set; } = () => { return true; };
+        protected Func<bool> AfterPhysics { get; set; } = () => { return true; };
+
+        protected Func<bool> BeforeHorizontalPhysics { get; set; } = () => { return true; };
+        protected Func<bool> AfterHorizontalPhysics { get; set; } = () => { return true; };
+
+        protected Func<bool> BeforeVerticalPhysics { get; set; } = () => { return true; };
+        protected Func<bool> AfterVerticalPhysics { get; set; } = () => { return true; };
+
+        public PhysicsBody Bep(Func<bool> beforePhysics) { BeforePhysics = beforePhysics; return this; }
+        public PhysicsBody Afp(Func<bool> afterPhysics) { AfterPhysics = afterPhysics; return this; }
+
+        public PhysicsBody Bhp(Func<bool> beforeHorizontalPhysics)
+        { BeforeHorizontalPhysics = beforeHorizontalPhysics; return this; }
+        public PhysicsBody Ahp(Func<bool> afterHorizontalPhysics)
+        { AfterHorizontalPhysics = afterHorizontalPhysics; return this; }
+
+        public PhysicsBody Bvp(Func<bool> beforeVerticalPhysics)
+        { BeforeVerticalPhysics = beforeVerticalPhysics; return this; }
+        public PhysicsBody Avp(Func<bool> afterVerticalPhysics)
+        { AfterVerticalPhysics = afterVerticalPhysics; return this; }
+
+        protected override void BaseFixedUpdate()
+        {
+            HandleHorizontalPhysics();
+            HandleVerticalPhysics();
+        }
+
+        private void HandleHorizontalPhysics()
+        {
+            if (!BeforePhysics() || !BeforeHorizontalPhysics()) return;
+            if (Velocity.X > 0) Velocity.X = Velocity.X - Drag < 0f ? 0f : Velocity.X - Drag;
+            else if (Velocity.X < 0) Velocity.X = Velocity.X + Drag > 0f ? 0f : Velocity.X + Drag;
+            float velocity = Velocity.X;
+            Transform.Position.X += velocity;
+            if (!AfterPhysics() || !AfterHorizontalPhysics()) Transform.Position.X -= velocity;
+        }
+
+        private void HandleVerticalPhysics()
+        {
+            if (!BeforePhysics() || !BeforeVerticalPhysics()) return;
+            Velocity.Y += Gravity;
+            float velocity = Velocity.Y;
+            Transform.Position.Y += velocity;
+            if (!AfterPhysics() || !AfterVerticalPhysics()) Transform.Position.Y -= velocity;
+        }
+    }
+}
