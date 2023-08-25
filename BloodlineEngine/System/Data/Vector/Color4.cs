@@ -1,4 +1,6 @@
-﻿namespace BloodlineEngine
+﻿using System.Globalization;
+
+namespace BloodlineEngine
 {
     public class Color4 : IVector
     {
@@ -35,8 +37,10 @@
         }
 
         public Color4 Copy() { return new Color4(R, G, B, A); }
-        
+
         public static Color4 Zero() { return new Color4(0, 0, 0, 0); }
+        /// <param name="hex">Hexadecimal value without "#". (i.e.: "000000")</param>
+        public static Color4 FromHex(string hex) { return Color.FromArgb(int.Parse(hex, NumberStyles.HexNumber)); }
 
         public override string ToString() { return $"Color4({R},{G},{B},{A})"; }
 

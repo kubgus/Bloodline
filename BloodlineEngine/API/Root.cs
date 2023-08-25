@@ -1,14 +1,11 @@
-﻿using System.Net.Mail;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-
-namespace BloodlineEngine
+﻿namespace BloodlineEngine
 {
     class RootTransformComponent : BLTransformComponent
     {
         public override void Ready() { Root.Init(); }
     }
 
-    public abstract class Root
+    public abstract class Root : BLPassedStorage
     {
         public Transform Transform
         {
@@ -29,17 +26,6 @@ namespace BloodlineEngine
         /// Create components inside this method.
         /// </summary>
         public virtual void Init() { }
-
-        private Dictionary<string, object> m_PassedValues = new Dictionary<string, object>();
-
-        public object this[string key]
-        {
-            get => m_PassedValues[key];
-            set => m_PassedValues[key] = value;
-        }
-
-        public Root Pass(string key, object value) { this[key] = value; return this; }
-        protected object Await(string key) { return this[key]; }
 
         public T GetComponent<T>() where T : Component, new()
         {

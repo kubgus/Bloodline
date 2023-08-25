@@ -13,7 +13,7 @@
 
         public float Magnitude => Mag(this);
         public Vector2 Normalized => Normalize(this);
-        public float Angle => Ang(this);
+        public float Direction => Dir(this);
         public Vector2 Absolute => Abs(this);
 
         public static Vector2 Zero()
@@ -24,10 +24,10 @@
         { return value / Mag(value); }
         public static float GetDistance(Vector2 value, Vector2 target)
         { return Mag(target - value); }
-        public static float Ang(Vector2 value)
+        public static float Dir(Vector2 value)
         { return (float)Math.Atan2(value.Y, value.X) * Numf.RadToDeg; }
         public static float RelativeAngle(Vector2 value, Vector2 target)
-        { return Ang(target - value); }
+        { return Dir(target - value); }
         public static Vector2 Abs(Vector2 value)
         { return new Vector2(Math.Abs(value.X), Math.Abs(value.Y)); }
         public static Vector2 Pow(Vector2 value, double power)

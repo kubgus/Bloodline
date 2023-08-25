@@ -24,7 +24,7 @@ namespace BloodlineEngine
         public static event EventHandler? FixedUpdate;
 
         private static Stopwatch m_Stopwatch = new();
-        private static System.Timers.Timer m_Timer = new(m_TickInterval); // Tick interval of 16 milliseconds (60FPS)
+        private static System.Timers.Timer m_Timer = new(m_TickInterval);
         private static float m_LastFrameTime;
 
         public static void ResetTime () { m_Stopwatch.Reset(); m_Stopwatch.Start(); m_Timer.Elapsed += Tick; m_Timer.Start(); }
