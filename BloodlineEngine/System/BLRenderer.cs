@@ -22,6 +22,8 @@ namespace BloodlineEngine
 
         public void Render(object? sender, PaintEventArgs e)
         {
+            Input.BLSetWorldProperties(cameraPosition: Camera.Position);
+
             Graphics g = e.Graphics;
 
             g.InterpolationMode = InterpolationMode;

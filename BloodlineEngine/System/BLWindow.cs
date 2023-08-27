@@ -11,10 +11,10 @@
         public BLWindow(Vector2 size, string title, bool resizable = false)
         {
             DoubleBuffered = true;
+            if (!resizable) { FormBorderStyle = FormBorderStyle.FixedToolWindow; }
 
             Size = (Size)size;
             Text = title;
-            if (!resizable) { FormBorderStyle = FormBorderStyle.FixedToolWindow; }
 
             BackColor = Color.Magenta;
             try { Icon = new Icon(File.OpenRead(".BLAssets/BloodlineLogo512.ico")); }
@@ -30,6 +30,8 @@
             KeyPreview = true;
 
             CreateEventHandlers();
+
+            Input.BLSetWorldProperties(screenSize: (Vector2)Size);
         }
 
         private void CreateEventHandlers()
@@ -41,6 +43,8 @@
 
             MouseEnter += Hover;
             MouseLeave += Unhover;
+
+            Resize += Scaled;
 
             PreviewKeyDown += Input.Press;
             KeyUp += Input.Release;
@@ -57,5 +61,7 @@
 
         private void Hover(object? sender, EventArgs e) { Hovered = true; }
         private void Unhover(object? sender, EventArgs e) { Hovered = false; }
+
+        private void Scaled(object? sender, EventArgs e) { Input.BLSetWorldProperties(screenSize: (Vector2)Size); }
     }
 }

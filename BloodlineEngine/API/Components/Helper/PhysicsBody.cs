@@ -5,13 +5,15 @@
         public Vector2 Velocity { get; set; } = 0f;
         public float Gravity { get; set; } = 0f;
         /// <summary>
-        /// Horizontal slow-down of an object.
+        /// The slow-down of an object.
         /// </summary>
-        public float Drag { get; set; } = 0f;
+        public Vector2 Drag { get; set; } = 0f;
 
         public PhysicsBody Vel(Vector2 velocity) { Velocity = velocity; return this; }
         public PhysicsBody Gra(float gravity) { Gravity = gravity; return this; }
-        public PhysicsBody Dra(float drag) { Drag = drag; return this; }
+        public PhysicsBody Dra(Vector2 drag) { Drag = drag; return this; }
+        /// <param name="drag">Horizontal drag.</param>
+        public PhysicsBody Dra(float dragX) { Drag.X = dragX; return this; }
 
         protected Func<bool> BeforePhysics { get; set; } = () => { return true; };
         protected Func<bool> AfterPhysics { get; set; } = () => { return true; };
@@ -44,8 +46,8 @@
         private void HandleHorizontalPhysics()
         {
             if (!BeforePhysics() || !BeforeHorizontalPhysics()) return;
-            if (Velocity.X > 0) Velocity.X = Velocity.X - Drag < 0f ? 0f : Velocity.X - Drag;
-            else if (Velocity.X < 0) Velocity.X = Velocity.X + Drag > 0f ? 0f : Velocity.X + Drag;
+            if (Velocity.X > 0) Velocity.X = Velocity.X - Drag.X < 0f ? 0f : Velocity.X - Drag.X;
+            else if (Velocity.X < 0) Velocity.X = Velocity.X + Drag.X > 0f ? 0f : Velocity.X + Drag.X;
             float velocity = Velocity.X;
             Transform.Position.X += velocity;
             if (!AfterPhysics() || !AfterHorizontalPhysics()) Transform.Position.X -= velocity;
@@ -54,6 +56,8 @@
         private void HandleVerticalPhysics()
         {
             if (!BeforePhysics() || !BeforeVerticalPhysics()) return;
+            if (Velocity.Y > 0) Velocity.Y = Velocity.Y - Drag.Y < 0f ? 0f : Velocity.Y - Drag.Y;
+            else if (Velocity.Y < 0) Velocity.Y = Velocity.Y + Drag.Y > 0f ? 0f : Velocity.Y + Drag.Y;
             Velocity.Y += Gravity;
             float velocity = Velocity.Y;
             Transform.Position.Y += velocity;

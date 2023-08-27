@@ -36,16 +36,16 @@
         public Vector2 TopRight
         {
             get => (Position.X + Scale.X, Position.Y);
-            set => Position = (value.X + Scale.X, value.Y);
+            set => Position = (value.X - Scale.X, value.Y);
         }
         public Vector2 BottomLeft
         {
-            get => (Position.X, Position.Y - Scale.Y);
+            get => (Position.X, Position.Y + Scale.Y);
             set { Position = (value.X, value.Y - Scale.Y); }
         }
         public Vector2 BottomRight
         {
-            get => (Position.X + Scale.X, Position.Y - Scale.Y);
+            get => Position + Scale;
             set => Position = value - Scale;
         }
         public Vector2 Center

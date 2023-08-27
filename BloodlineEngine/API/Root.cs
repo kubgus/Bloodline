@@ -1,8 +1,8 @@
 ﻿namespace BloodlineEngine
 {
-    class RootTransformComponent : BLTransformComponent
+    class BLRootTransformComponent : BLTransformComponent
     {
-        public override void Ready() { Root.Init(); }
+        public override void UpdateOnce() { Root.Init(); }
     }
 
     public abstract class Root : BLPassedStorage
@@ -19,13 +19,16 @@
 
         public Root()
         {
-            m_TransformComponent = CreateComponent<RootTransformComponent>();
+            m_TransformComponent = CreateComponent<BLRootTransformComponent>();
         }
-
+       
         /// <summary>
         /// Create components inside this method.
         /// </summary>
         public virtual void Init() { }
+
+        public void Enable() { foreach (Component component in m_LocalActiveComponents) { component.Enable(); } }
+        public void Disable() { foreach (Component component in m_LocalActiveComponents) { component.Disable(); } }
 
         public T GetComponent<T>() where T : Component, new()
         {
@@ -37,9 +40,10 @@
         /// <returns>The created component.</returns>
         public T CreateComponent<T>() where T : Component, new()
         {
-            Debug.Assert(m_LocalActiveComponents.Find(x => x is T) is null, "This component already exists!");
+            Debug.Assert(m_LocalActiveComponents.Find(x => x is T) is null, $"This component already exists: { typeof(T) }");
 
-            T component = new() { Root = this };
+            T component = new();
+            component.SetRoot(this);
             m_LocalActiveComponents.Add(component);
             return component;
         }

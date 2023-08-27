@@ -1,4 +1,6 @@
-﻿namespace BloodlineEngine
+﻿using System.Windows.Forms;
+
+namespace BloodlineEngine
 {
     public abstract class BLApplication
     {
@@ -28,7 +30,7 @@
             Application.Run(Window);
         }
 
-        void MainLoop()
+        private void MainLoop()
         {
             BLReady();
 
@@ -50,7 +52,10 @@
 
                     Thread.Sleep(1);
                 }
-                catch { Debug.BLWarn("Window is not present! It is either being initialized or has not been created at all."); }
+                catch (Exception error) { 
+                    Debug.BLWarn("Window is not present! It is either being initialized or has not been created at all.");
+                    Debug.BLError(error);
+                }
 
                 BLDebugShift();
             }
@@ -59,6 +64,27 @@
 
             return; // Formerly Application.Exit()
         }
+
+        private Dictionary<string, object> m_NamedInstances = new();
+        private List<object> m_UnnamedInstances = new();
+        protected T Instantiate<T>(string key) where T : class, new()
+        {
+            Debug.Assert(!m_NamedInstances.ContainsKey(key), $"An instance with key: '{key}' already exists!");
+            T instance = new();
+            m_NamedInstances[key] = instance;
+            return instance;
+        }
+        protected T Instantiate<T>() where T : class, new()
+        {
+            Debug.Assert(!m_UnnamedInstances.OfType<T>().Any(), $"An instance of this class already exists. Give it a key!");
+            T instance = new();
+            m_UnnamedInstances.Add(instance);
+            return instance;
+        }
+        protected static T ThrowawayInstance<T>() where T : class, new() { return new T(); }
+        protected T GetInstance<T>(string key) where T : class, new() { return (T)m_NamedInstances[key]; }
+        protected object GetInstance(string key) { return m_NamedInstances[key]; }
+        protected T GetInstance<T>() where T : class, new() { return m_UnnamedInstances.OfType<T>().First(); }
 
         public virtual void Ready() { } // Runs when the GameLoop starts
         public virtual void DebugSpark() { } // Runs before everything else

@@ -6,6 +6,8 @@
 
         public Transform RelativeTransform { get; set; } = new();
 
+        public BoxCollider Rel(Transform relativeTransform) { RelativeTransform = relativeTransform; return this; }
+
         public Transform ModifiedTransform => Transform + RelativeTransform;
 
         public override bool IsColliding(CollisionComponent other)
@@ -16,6 +18,6 @@
         }
 
         private bool IsColliding(BoxCollider other)
-        { return Collision.CheckPolygonCollision(ModifiedTransform.Vertices, other.ModifiedTransform.Vertices); }
+        { return PolygonAndPolygon.Check(ModifiedTransform.Vertices, other.ModifiedTransform.Vertices); }
     }
 }

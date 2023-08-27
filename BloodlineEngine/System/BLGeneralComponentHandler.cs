@@ -6,14 +6,14 @@ namespace BloodlineEngine
     {
         private static List<Component> m_ActiveComponents = new();
 
-        public static List<Component> Get()
+        public static Component[] Get()
         {
-            return m_ActiveComponents.ToList();
+            return m_ActiveComponents.ToArray();
         }
 
         public static void Run(BLComponentEventDelegate eventDelegate)
         {
-            List<Component> queue = Get();
+            Component[] queue = Get();
 
             foreach (Component component in queue)
             {
