@@ -1,4 +1,4 @@
-<img width="128" align="right" src="[https://github.com/kubgus/Bloodline/assets/53797257/73886531-f03a-47c3-95a7-301156be62a9](https://github.com/kubgus/Bloodline/blob/master/BloodlineEngine/.BLAssets/BloodlineLogo1080.png)"></img>
+<img width="128" align="right" src="https://github.com/kubgus/Bloodline/blob/master/BloodlineEngine/.BLAssets/BloodlineLogo1080.png"></img>
 # Bloodline
 
 The framework you didn't know you needed. Because you never did need it. But it's extremely useful.
