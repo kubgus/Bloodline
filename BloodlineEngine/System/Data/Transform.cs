@@ -9,7 +9,7 @@
 
         public Transform() { }
 
-        public Transform(Vector2? position, Vector2? scale, float? rotation, float? z)
+        public Transform(Vector2? position = null, Vector2? scale = null, float? rotation = null, float? z = null)
         {
             Position = position ?? new Vector2();
             Scale = scale ?? new Vector2();

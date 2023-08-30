@@ -6,10 +6,10 @@ namespace BloodlineEngine
     {
         public static bool IsScrolling { get; private set; }
         public static Vector2 MousePosition { get; private set; } = new();
-        public static Vector2 MousePositionScreen => MousePosition;
+        public static Vector2 MousePositionWindow => MousePosition;
         public static Vector2 MousePositionWorld => MousePosition + m_CameraPosition;
 
-        private static Vector2 m_ScreenSize = new();
+        private static Vector2 m_WindowSize = new();
         private static Vector2 m_CameraPosition = new();
 
         private static HashSet<Keys> m_ActiveKeys = new();
@@ -31,8 +31,8 @@ namespace BloodlineEngine
         { return m_ActiveMouseButtons.Contains(mouseButton); }
 
         public static void BLModifyMousePosition(object? sender, MouseEventArgs e) { MousePosition = (Vector2)e.Location; }
-        public static void BLSetWorldProperties(Vector2? screenSize = null, Vector2? cameraPosition = null)
-        { m_ScreenSize = screenSize ?? m_ScreenSize; m_CameraPosition = cameraPosition ?? m_CameraPosition; }
+        public static void BLSetWorldProperties(Vector2? windowSize = null, Vector2? cameraPosition = null)
+        { m_WindowSize = windowSize ?? m_WindowSize; m_CameraPosition = cameraPosition ?? m_CameraPosition; }
 
         private static void TryToggleDebug(Keys key) { if (key == Keys.F5) Debug.ToggleConsole(); }
     }

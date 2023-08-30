@@ -31,7 +31,7 @@
 
             CreateEventHandlers();
 
-            Input.BLSetWorldProperties(screenSize: (Vector2)Size);
+            Input.BLSetWorldProperties(windowSize: (Vector2)Size);
         }
 
         private void CreateEventHandlers()
@@ -62,6 +62,10 @@
         private void Hover(object? sender, EventArgs e) { Hovered = true; }
         private void Unhover(object? sender, EventArgs e) { Hovered = false; }
 
-        private void Scaled(object? sender, EventArgs e) { Input.BLSetWorldProperties(screenSize: (Vector2)Size); }
+        private void Scaled(object sender, EventArgs e) {
+            Vector2 windowSize = (Vector2)((Control)sender).ClientRectangle.Size;
+            Renderer.Camera.WindowSize = windowSize;
+            Input.BLSetWorldProperties(windowSize: windowSize);
+        }
     }
 }

@@ -15,6 +15,51 @@ namespace Sandbox
         }
     }
 
+    class EnemyMeleeBehavior : Component
+    {
+        float m_Movement = Chance.RandomFloat(-1f, 1f);
+        float m_Rad = 0f;
+        float m_Dir = 0f;
+
+        public override void Awake()
+        {
+            m_Rad = Chance.RandomFloat(100f, 300f);
+            m_Dir = Chance.RandomFloat(0f, 360f);
+        }
+
+        public override void Update()
+        {
+            Player player = Root.Await<Player>("Player");
+            m_Rad += Chance.RandomFloat(-1f, -1f);
+            m_Dir += m_Movement;
+            Transform.Center = Vector2.MoveInDirection(player.Transform.Center, m_Dir, m_Rad);
+        }
+    }
+
+    class EnemyDeathBehavior : Component
+    {
+        public override void Update()
+        {
+            if (Root.GetComponent<BoxCollider>().IsColliding("Bullet"))
+            {
+                Root.Disable();
+            }
+        }
+    }
+
+    class Enemy : Root
+    {
+        public override void Init()
+        {
+            CreateComponent<Sprite>()
+                .Bmp(new Bitmap("Assets/enemy.png"));
+            CreateComponent<BoxCollider>()
+                .Scl(32f);
+            CreateComponent<EnemyDeathBehavior>();
+            CreateComponent<EnemyMeleeBehavior>();
+        }
+    }
+
     class PlayerBulletController : Component
     {
         bool ReachedMouse = false;
@@ -45,6 +90,25 @@ namespace Sandbox
             CreateComponent<PhysicsBody>()
                 .Dra(new Vector2(0.6f));
             CreateComponent<PlayerBulletController>();
+            CreateComponent<BoxCollider>()
+                .Pin("Bullet");
+        }
+    }
+
+    class PlayerBulletSpawner : Component
+    {
+        bool m_SemiAuto = true;
+
+        public override void Update()
+        {
+            if (Input.IsMouseButtonPressed(MouseButtons.Left) && m_SemiAuto == true)
+            {
+                Vector2 position = Root.Transform.Center + (-30f, 0f);
+                Root.Await<Func<Vector2, FriendlyBullet>>("SpawnBullet")(position);
+                m_SemiAuto = false;
+            }
+
+            if (!Input.IsMouseButtonPressed(MouseButtons.Left) && m_SemiAuto == false) m_SemiAuto = true;
         }
     }
 
@@ -53,7 +117,7 @@ namespace Sandbox
         public override void Update()
         {
             PhysicsBody physicsBody = Root.GetComponent<PhysicsBody>();
-            Ground ground = Await<Ground>("Ground");
+            Ground ground = Root.Await<Ground>("Ground");
             Raycast groundCheck = new(Transform.BottomLeft, Transform.BottomLeft + 17f);
             if (Input.IsKeyPressed(Keys.W) && groundCheck.IsColliding(ground.Transform.Vertices)) physicsBody.Velocity.Y = -21f;
             if (Input.IsKeyPressed(Keys.A)) physicsBody.Velocity.X = -7f;
@@ -65,10 +129,10 @@ namespace Sandbox
     {
         public override void FixedUpdate()
         {
-            Camera camera = Await<Camera>("Camera");
+            Camera camera = Root.Await<Camera>("Camera");
             if (camera != null) camera.Center = Vector2.GetDistance(camera.Center, Transform.Center) < 200f ?
-                    Vector2.MoveTowards(camera.Center, Transform.Center + (0, -40f), 5.5f) :
-                    Vector2.MoveTowards(camera.Center, Transform.Center + (0, -40f), 7f);
+                    Vector2.MoveTowards(camera.Center, Transform.Center + (0, -camera.WindowSize.Y / 5f), 5.5f) :
+                    Vector2.MoveTowards(camera.Center, Transform.Center + (0, -camera.WindowSize.Y / 5f), 7f);
         }
     }
 
@@ -90,18 +154,15 @@ namespace Sandbox
                     GetComponent<PhysicsBody>().Velocity.Y = -GetComponent<PhysicsBody>().Velocity.Y / 2f;
                     return false;
                 });
-            CreateComponent<PlayerMovement>()
-                .Pass("Ground", Await<Ground>("Ground"));
-            CreateComponent<CameraFollow>()
-                .Pass("Camera", Await<Camera>("Camera"));
+            CreateComponent<PlayerMovement>();
+            CreateComponent<CameraFollow>();
+            CreateComponent<PlayerBulletSpawner>();
         }
     }
 
     class Game : BLApplication
     {
-        public Game() : base(512f, "Minigame", lauchWithConsoleShown: true) { }
-
-        bool m_SemiAuto = true;
+        public Game() : base(512f, "Minigame", lauchWithConsoleShown: true, windowResizable: true) { }
 
         public override void Ready()
         {
@@ -110,21 +171,17 @@ namespace Sandbox
             Ground ground = Instantiate<Ground>();
             Instantiate<Player>()
                 .Pass("Ground", ground)
-                .Pass("Camera", RenderedCamera);
+                .Pass("Camera", RenderedCamera)
+                .Pass("SpawnBullet", new Func<Vector2, FriendlyBullet>((Vector2 position) => (FriendlyBullet)ThrowawayInstance<FriendlyBullet>().Pass("Player", position)));
         }
 
         public override void Update()
         {
-            if (Input.IsMouseButtonPressed(MouseButtons.Left) && m_SemiAuto == true)
+            if (Time.ElapsedFrames % 240 == 0)
             {
-                Player player = GetInstance<Player>();
-                Vector2 position = player.Transform.Center + (-30f, 0f);
-                ThrowawayInstance<FriendlyBullet>()
-                    .Pass("Player", position);
-                m_SemiAuto = false;
+                ThrowawayInstance<Enemy>()
+                    .Pass("Player", GetInstance<Player>());
             }
-
-            if (!Input.IsMouseButtonPressed(MouseButtons.Left) && m_SemiAuto == false) m_SemiAuto = true;
         }
     }
 

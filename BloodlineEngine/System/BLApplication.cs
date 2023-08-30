@@ -81,10 +81,10 @@ namespace BloodlineEngine
             m_UnnamedInstances.Add(instance);
             return instance;
         }
-        protected static T ThrowawayInstance<T>() where T : class, new() { return new T(); }
-        protected T GetInstance<T>(string key) where T : class, new() { return (T)m_NamedInstances[key]; }
+        protected static T ThrowawayInstance<T>() where T : Root, new() { return new T(); }
+        protected T GetInstance<T>(string key) where T : Root, new() { return (T)m_NamedInstances[key]; }
         protected object GetInstance(string key) { return m_NamedInstances[key]; }
-        protected T GetInstance<T>() where T : class, new() { return m_UnnamedInstances.OfType<T>().First(); }
+        protected T GetInstance<T>() where T : Root, new() { return m_UnnamedInstances.OfType<T>().First(); }
 
         public virtual void Ready() { } // Runs when the GameLoop starts
         public virtual void DebugSpark() { } // Runs before everything else
