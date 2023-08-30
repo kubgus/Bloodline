@@ -1,7 +1,7 @@
-<img width="128" align="right" src="https://github.com/kubgus/Bloodline/assets/53797257/73886531-f03a-47c3-95a7-301156be62a9"></img>
+<img width="128" align="right" src="https://github.com/kubgus/Bloodline/blob/master/BloodlineEngine/.BLAssets/BloodlineLogo1080.png"></img>
 # Bloodline
 
-The engine you didn't know you needed. Because you never did need it. But it's extremely useful.
+The framework you didn't know you needed. Because you never did need it. But it's extremely useful.
 
 <br>
 
@@ -22,8 +22,3 @@ In typical ECS, you create entities, which are basically just numbers that compo
 
 ## Cross-platform ⭐
 This service is not cross-platform, yet, and only works on Winodws. But I'm planning to add the option to export elsewhere.
-
-<br>
-
-## GUI? Do you mean: Cringe UI? 😎
-Yes, everything is text. Pure good ol' code.
