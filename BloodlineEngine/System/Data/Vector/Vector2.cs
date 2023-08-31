@@ -36,6 +36,7 @@
         { return left.X * right.X  + left.Y * right.Y; }
         public static bool XorY(Vector2 left, Vector2 right)
         { return left.X == right.X || left.Y == right.Y; }
+        // TODO: Might be broken:
         public static Vector2 MoveInDirection(Vector2 value, Vector2 direction, float distance)
         { return value + Normalize(direction) * distance; }
         public static Vector2 MoveInDirection(Vector2 value, float angle, float distance)

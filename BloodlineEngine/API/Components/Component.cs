@@ -1,43 +1,20 @@
 ﻿namespace BloodlineEngine
 {
-    public abstract class Component : BLPassedStorage, IBLToString
+    public abstract class Component : IBLToString
     {
         public Root Root
         {
             get => m_ActiveRoot ?? null; // TODO: Figure out something to replace null with.
             set => m_ActiveRoot = value;
         }
+        private Root? m_ActiveRoot;
+
         public Transform Transform { get => Root.Transform; set => Root.Transform = value; }
         public Component Pos(Vector2 position) { Transform.Position = position; return this; }
         public Component Ctr(Vector2 center) { Transform.Center = center; return this; }
         public Component Scl(Vector2 scale) { Transform.Scale = scale; return this; }
         public Component Rot(float rotation) { Transform.Rotation = rotation; return this; }
         public Component Zee(float z) { Transform.Z = z; return this; }
-
-        public bool IsActive { get; private set; } = true;
-        public void Enable() { 
-            if (IsActive) { Debug.BLWarn("Enabling a component that is already active!"); }
-            IsActive = true;
-            BLEnabled();
-        }
-        public void Disable()
-        {
-            if (!IsActive) { Debug.BLWarn("Disabling a component that is already not active!"); }
-            IsActive = false;
-            BLDisabled();
-        }
-
-        private Root? m_ActiveRoot;
-
-        public delegate void BLComponentEventDelegate(Component component);
-        public static BLComponentEventDelegate ReadyDelegate = (Component component) => component.BLReady();
-        public static BLComponentEventDelegate DebugSparkDelegate = (Component component) => component.BLDebugSpark();
-        public static BLComponentEventDelegate SparkDelegate = (Component component) => component.BLSpark();
-        public static BLComponentEventDelegate DrawDelegate = (Component component) => component.BLDraw();
-        public static BLComponentEventDelegate UpdateDelegate = (Component component) => component.BLUpdate();
-        public static BLComponentEventDelegate FixedUpdateDelegate = (Component component) => component.BLFixedUpdate();
-        public static BLComponentEventDelegate DebugShiftDelegate = (Component component) => component.BLDebugShift();
-        public static BLComponentEventDelegate HaltDelegate = (Component component) => component.BLHalt();
 
         public Component()
         {
@@ -52,6 +29,33 @@
         }
 
         public void SetRoot(Root root) { Root = root; BLAwake(); }
+
+        public BLArgStorage Args => Root.Args;
+        public Component Arg(string key, object value) { Args[key] = value; return this; }
+
+        public bool IsActive { get; private set; } = true;
+        public void Enable()
+        {
+            if (IsActive) { Debug.BLWarn("Enabling a component that is already active!"); }
+            IsActive = true;
+            BLEnabled();
+        }
+        public void Disable()
+        {
+            if (!IsActive) { Debug.BLWarn("Disabling a component that is already not active!"); }
+            IsActive = false;
+            BLDisabled();
+        }
+
+        public delegate void BLComponentEventDelegate(Component component);
+        public static BLComponentEventDelegate ReadyDelegate = (Component component) => component.BLReady();
+        public static BLComponentEventDelegate DebugSparkDelegate = (Component component) => component.BLDebugSpark();
+        public static BLComponentEventDelegate SparkDelegate = (Component component) => component.BLSpark();
+        public static BLComponentEventDelegate DrawDelegate = (Component component) => component.BLDraw();
+        public static BLComponentEventDelegate UpdateDelegate = (Component component) => component.BLUpdate();
+        public static BLComponentEventDelegate FixedUpdateDelegate = (Component component) => component.BLFixedUpdate();
+        public static BLComponentEventDelegate DebugShiftDelegate = (Component component) => component.BLDebugShift();
+        public static BLComponentEventDelegate HaltDelegate = (Component component) => component.BLHalt();
 
         private bool m_DebugSparkOnce, m_SparkOnce, m_DrawOnce, m_UpdateOnce, m_FixedUpdateOnce, m_DebugShiftOnce = false;
 

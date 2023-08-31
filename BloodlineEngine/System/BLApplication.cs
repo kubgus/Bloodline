@@ -67,14 +67,14 @@ namespace BloodlineEngine
 
         private Dictionary<string, object> m_NamedInstances = new();
         private List<object> m_UnnamedInstances = new();
-        protected T Instantiate<T>(string key) where T : class, new()
+        protected T Instantiate<T>(string key) where T : Root, new()
         {
             Debug.Assert(!m_NamedInstances.ContainsKey(key), $"An instance with key: '{key}' already exists!");
             T instance = new();
             m_NamedInstances[key] = instance;
             return instance;
         }
-        protected T Instantiate<T>() where T : class, new()
+        protected T Instantiate<T>() where T : Root, new()
         {
             Debug.Assert(!m_UnnamedInstances.OfType<T>().Any(), $"An instance of this class already exists. Give it a key!");
             T instance = new();

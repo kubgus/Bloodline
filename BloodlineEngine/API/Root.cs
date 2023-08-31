@@ -5,7 +5,7 @@
         public override void UpdateOnce() { Root.Init(); }
     }
 
-    public abstract class Root : BLPassedStorage
+    public abstract class Root
     {
         public Transform Transform
         {
@@ -21,6 +21,9 @@
         {
             m_TransformComponent = CreateComponent<BLRootTransformComponent>();
         }
+
+        public BLArgStorage Args = new();
+        public Root Arg(string key, object value) { Args[key] = value; return this; }
        
         /// <summary>
         /// Create components inside this method.
