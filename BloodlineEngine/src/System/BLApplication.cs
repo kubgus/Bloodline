@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace BloodlineEngine
+﻿namespace BloodlineEngine
 {
     public abstract class BLApplication
     {
@@ -26,8 +24,6 @@ namespace BloodlineEngine
             Time.FixedUpdate += BLFixedUpdate;
 
             m_Running = true;
-
-            Application.Run(Window);
         }
 
         private void MainLoop()
@@ -46,7 +42,7 @@ namespace BloodlineEngine
                 {
                     BLDraw();
 
-                    Window.BeginInvoke((MethodInvoker)delegate { Window.Refresh(); });
+                    Renderer.Render();
 
                     BLUpdate();
 

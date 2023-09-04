@@ -92,9 +92,9 @@
         public static implicit operator (float, float)(Vector2 value) { return (value.X, value.Y); }
         public static implicit operator string(Vector2 value) { return value.ToString(); }
 
-        public static explicit operator Size(Vector2 value) { return new Size((int)value.X, (int)value.Y); }
-        public static explicit operator Vector2(Size value) { return new Vector2(value.Width, value.Height); }
-        public static explicit operator Point(Vector2 value) { return new Point((int)value.X, (int)value.Y); }
-        public static explicit operator Vector2(Point value) { return new Vector2(value.X, value.Y); }
+        // public static explicit operator Size(Vector2 value) { return new Size((int)value.X, (int)value.Y); }
+        // public static explicit operator Vector2(Size value) { return new Vector2(value.Width, value.Height); }
+        // public static explicit operator Point(Vector2 value) { return new Point((int)value.X, (int)value.Y); }
+        // public static explicit operator Vector2(Point value) { return new Vector2(value.X, value.Y); }
     }
 }

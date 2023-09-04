@@ -10,18 +10,18 @@ namespace Sandbox
         {
             float speed = (float)Args["Speed"];
 
-            if (Input.IsKeyPressed(Keys.W))
+            if (Input.IsKeyPressed(Keyboard.W))
             {
-                if (Input.IsKeyPressed (Keys.D)) { m_Dir = -45f; }
-                else if (Input.IsKeyPressed (Keys.A)) { m_Dir = -135f; }
+                if (Input.IsKeyPressed (Keyboard.D)) { m_Dir = -45f; }
+                else if (Input.IsKeyPressed (Keyboard.A)) { m_Dir = -135f; }
                 else { m_Dir = -90f; }
-            } else if (Input.IsKeyPressed (Keys.S))
+            } else if (Input.IsKeyPressed (Keyboard.S))
             {
-                if (Input.IsKeyPressed(Keys.D)) { m_Dir = 45f; }
-                else if (Input.IsKeyPressed(Keys.A)) { m_Dir = 135f; }
+                if (Input.IsKeyPressed(Keyboard.D)) { m_Dir = 45f; }
+                else if (Input.IsKeyPressed(Keyboard.A)) { m_Dir = 135f; }
                 else { m_Dir = 90f; }
-            } else if (Input.IsKeyPressed(Keys.D)) { m_Dir = 0f; }
-            else if (Input.IsKeyPressed(Keys.A)) { m_Dir = 180f; }
+            } else if (Input.IsKeyPressed(Keyboard.D)) { m_Dir = 0f; }
+            else if (Input.IsKeyPressed(Keyboard.A)) { m_Dir = 180f; }
             else { speed = 0f; }
 
             Transform.Position = Vector2.MoveInDirection(Transform.Position, m_Dir, speed);
@@ -30,7 +30,7 @@ namespace Sandbox
 
     class CameraFollow : Component
     {
-        Camera? m_Camera;
+        Camera m_Camera;
 
         public override void Awake()
         {
@@ -56,9 +56,9 @@ namespace Sandbox
     {
         public override void Init()
         {
-            CreateComponent<Sprite>()
-                .Bmp(new Bitmap("Assets/player.png"))
-                .Scl(64f);
+            // CreateComponent<Sprite>()
+            //    .Bmp(new Bitmap("Assets/player.png"))
+            //    .Scl(64f);
             CreateComponent<KeyboardMovement>();
             CreateComponent<CameraFollow>();
         }
@@ -70,7 +70,7 @@ namespace Sandbox
 
         public override void Ready()
         {
-            Renderer.ClearColor = Color.Black;
+            Renderer.ClearColor = "#000000";
 
             Instantiate<Player>()
                 .Arg("Speed", 5f)

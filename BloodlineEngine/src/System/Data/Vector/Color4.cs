@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿using SDL2;
 
 namespace BloodlineEngine
 {
@@ -13,6 +13,12 @@ namespace BloodlineEngine
         private int g;
         private int b;
         private int a;
+
+        public static Color4 Red { get; private set; } = new Color4(255, 0, 0, 255);
+        public static Color4 Green { get; private set; } = new Color4(0, 255, 0, 255);
+        public static Color4 Blue { get; private set; } = new Color4(0, 0, 255, 255);
+        public static Color4 White { get; private set; } = new Color4(255, 255, 255, 255);
+        public static Color4 Magenta { get; private set; } = new Color4(255, 0, 255, 255);
 
         public Color4(int r, int g, int b, int a)
         {
@@ -53,11 +59,17 @@ namespace BloodlineEngine
         {
             try
             {
-                Color4 color = Color.FromArgb(int.Parse(hex, NumberStyles.HexNumber));
-                color.A = 255;
-                return color;
+                if (hex.StartsWith("#")) hex = hex.Substring(1);
+                if (hex.Length != 6 || hex.Length != 8) throw new ArgumentException("Hex string must be 6 or 8 charachers long! (RGB[A])");
+                return new SDL.SDL_Color()
+                {
+                    r = Convert.ToByte(hex[..2], 16),
+                    g = Convert.ToByte(hex.Substring(2, 2), 16),
+                    b = Convert.ToByte(hex.Substring(4, 2), 16),
+                    a = hex.Length == 8 ? Convert.ToByte(hex.Substring(6, 2), 16) : Convert.ToByte("FF", 16)
+                };
             }
-            catch { Debug.BLWarn("Hex color parameter incorrect! Defaulting to magenta."); return Color.Magenta; }
+            catch { Debug.BLWarn("Hex color parameter incorrect! Defaulting to magenta."); return Magenta; }
         }
 
         public override string ToString() { return $"Color4({R},{G},{B},{A})"; }
@@ -75,10 +87,26 @@ namespace BloodlineEngine
         public static implicit operator string(Color4 value)
         { return value.ToString(); }
 
-        public static implicit operator Color(Color4 value)
-        { return Color.FromArgb(value.A, value.R, value.G, value.B); }
-        public static implicit operator Color4(Color value)
-        { return new Color4(value.R, value.G, value.B, value.A); }
+        public static implicit operator SDL.SDL_Color(Color4 value)
+        {
+            return new SDL.SDL_Color()
+            {
+                r = (byte)value.R,
+                g = (byte)value.G,
+                b = (byte)value.B,
+                a = (byte)value.A
+            };
+        }
+        public static implicit operator Color4(SDL.SDL_Color value)
+        {
+            return new Color4()
+            {
+                R = value.r,
+                G = value.g,
+                B = value.b,
+                A = value.a
+            };
+        }
         public static implicit operator Color4(string hex)
         { return FromHex(hex); }
     }
