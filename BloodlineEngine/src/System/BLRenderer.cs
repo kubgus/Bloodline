@@ -57,6 +57,18 @@
                         };
                         _ = SDL.SDL_RenderFillRect(SDLRenderer, ref quad);
                         break;
+                    case Sprite r:
+                        if (r.Path is null) { Debug.Warn("Sprite received no path!"); continue; }
+                        IntPtr texture = SDL_image.IMG_LoadTexture(SDLRenderer, r.Path);
+                        SDL.SDL_Rect rect = new()
+                        {
+                            x = (int)r.Transform.Position.X,
+                            y = (int)r.Transform.Position.Y,
+                            w = (int)r.Transform.Scale.X,
+                            h = (int)r.Transform.Scale.Y,
+                        };
+                        _ = SDL.SDL_RenderCopy(SDLRenderer, texture, IntPtr.Zero, ref rect);
+                        break;
                 }
             }
 

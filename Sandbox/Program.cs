@@ -6,10 +6,10 @@ namespace Sandbox
     {
         public override void Update()
         {
-            if (Input.IsKeyPressed(Keyboard.W)) { Transform.Position.Y -= 5f; }
-            if (Input.IsKeyPressed(Keyboard.S)) { Transform.Position.Y += 5f; }
-            if (Input.IsKeyPressed(Keyboard.A)) { Transform.Position.X -= 5f; }
-            if (Input.IsKeyPressed(Keyboard.D)) { Transform.Position.X += 5f; }
+            if (Input.IsKeyPressed(Keyboard.W)) { Transform.Position.Y -= 2f; }
+            if (Input.IsKeyPressed(Keyboard.S)) { Transform.Position.Y += 2f; }
+            if (Input.IsKeyPressed(Keyboard.A)) { Transform.Position.X -= 2f; }
+            if (Input.IsKeyPressed(Keyboard.D)) { Transform.Position.X += 2f; }
         }
     }
 
@@ -17,8 +17,8 @@ namespace Sandbox
     {
         public override void Init()
         {
-            CreateComponent<Quad>()
-                .Col(Color4.Red)
+            CreateComponent<Sprite>()
+                .Src("assets/player.png")
                 .Pos(0f)
                 .Scl(30f);
             CreateComponent<KeyboardMovement>();

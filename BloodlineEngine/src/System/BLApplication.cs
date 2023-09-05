@@ -18,7 +18,8 @@ namespace BloodlineEngine
         {
             if (lauchWithConsoleShown) Debug.StartConsole();
 
-            CopySDL();
+            CopyEmbeddedResource("SDL2.dll", OperatingSystem.IsWindows());
+            CopyEmbeddedResource("SDL2_image.dll", OperatingSystem.IsWindows());
             Window = new BLWindow(windowSize, windowTitle, windowResizable);
 
             m_MainLoopThread = new Thread(MainLoop);
@@ -122,12 +123,12 @@ namespace BloodlineEngine
 
         // Additional methods
 
-        private static void CopySDL()
+        private static void CopyEmbeddedResource(string path, bool assertion = true)
         {
-            if (!OperatingSystem.IsWindows()) return;
-            Debug.Info("Copying SDL2.dll (Embedded Resource) into the running directory...");
-            using Stream? resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("BloodlineEngine.SDL2.dll");
-            using FileStream fileStream = File.Create("SDL2.dll");
+            if (!assertion) return;
+            Debug.Info($"Copying Embedded Resources ({path}) into the running directory...");
+            using Stream? resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"BloodlineEngine.{path}");
+            using FileStream fileStream = File.Create(path);
             resourceStream?.CopyTo(fileStream);
         }
     }

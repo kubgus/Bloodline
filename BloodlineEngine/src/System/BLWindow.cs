@@ -26,6 +26,8 @@
             Debug.Assert(SDLWindow != IntPtr.Zero, "SDL Window could not be created!");
 
             Renderer = new(this);
+
+            Debug.Info($"Initialized a window with SDL!");
         }
 
         ~BLWindow()

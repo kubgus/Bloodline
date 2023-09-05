@@ -15,6 +15,7 @@
 
     <ItemGroup>
       <EmbeddedResource Include="SDL2.dll" />
+      <EmbeddedResource Include="SDL2_image.dll" />
     </ItemGroup>
 	
 </Project>
