@@ -19,8 +19,9 @@ namespace Sandbox
         {
             CreateComponent<Sprite>()
                 .Src("assets/player.png")
+                //.Col(Color4.Red)
                 .Pos(0f)
-                .Scl(30f);
+                .Scl(256f);
             CreateComponent<KeyboardMovement>();
         }
     }

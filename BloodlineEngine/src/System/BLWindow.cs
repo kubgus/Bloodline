@@ -22,7 +22,8 @@
             SDLWindow = SDL.SDL_CreateWindow(title,
                 SDL.SDL_WINDOWPOS_CENTERED, SDL.SDL_WINDOWPOS_CENTERED,
                 (int)size.X, (int)size.Y,
-                resizable ? SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE : SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
+                (resizable ? SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE : SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN) |
+                SDL.SDL_WindowFlags.SDL_WINDOW_VULKAN);
             Debug.Assert(SDLWindow != IntPtr.Zero, "SDL Window could not be created!");
 
             Renderer = new(this);

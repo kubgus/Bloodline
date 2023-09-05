@@ -18,10 +18,10 @@
             m_ActiveRenderedComponents.Clear();
 
             SDLRenderer = SDL.SDL_CreateRenderer(Window.SDLWindow, index: -1,
-                SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
+                SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED | SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC);
             Debug.Assert(SDLRenderer != IntPtr.Zero, "SDL Renderer could not be created!");
 
-            _ = SDL.SDL_SetRenderDrawBlendMode(SDLRenderer, SDL.SDL_BlendMode.SDL_BLENDMODE_NONE);
+            _ = SDL.SDL_SetRenderDrawBlendMode(SDLRenderer, SDL.SDL_BlendMode.SDL_BLENDMODE_BLEND);
         }
 
         ~BLRenderer()
@@ -41,33 +41,41 @@
             {
                 if (!renderedComponent.IsActive) { continue; }
 
-                // TODO: Camera translate
+                // Prepare rotation
+                SDL.SDL_Point center = new()
+                {
+                    x = (int)(renderedComponent.Transform.Center.X),
+                    y = (int)(renderedComponent.Transform.Center.Y),
+                };
 
+                SDL.SDL_Rect rect;
                 switch (renderedComponent)
                 {
                     case Quad r:
+                        rect = new()
+                        {
+                            x = (int)r.Transform.Position.X,
+                            y = (int)r.Transform.Position.Y,
+                            w = (int)r.Transform.Scale.X,
+                            h = (int)r.Transform.Scale.Y,
+                        };
                         _ = SDL.SDL_SetRenderDrawColor(SDLRenderer,
                             (byte)r.Color.R, (byte)r.Color.G, (byte)r.Color.B, (byte)r.Color.A);
-                        SDL.SDL_Rect quad = new()
-                        {
-                            x = (int)r.Transform.Position.X,
-                            y = (int)r.Transform.Position.Y,
-                            w = (int)r.Transform.Scale.X,
-                            h = (int)r.Transform.Scale.Y,
-                        };
-                        _ = SDL.SDL_RenderFillRect(SDLRenderer, ref quad);
+                        _ = SDL.SDL_RenderFillRect(SDLRenderer, ref rect);
                         break;
                     case Sprite r:
+                        // TODO: Fix wrong movement
                         if (r.Path is null) { Debug.Warn("Sprite received no path!"); continue; }
-                        IntPtr texture = SDL_image.IMG_LoadTexture(SDLRenderer, r.Path);
-                        SDL.SDL_Rect rect = new()
+                        rect = new()
                         {
                             x = (int)r.Transform.Position.X,
                             y = (int)r.Transform.Position.Y,
                             w = (int)r.Transform.Scale.X,
                             h = (int)r.Transform.Scale.Y,
                         };
-                        _ = SDL.SDL_RenderCopy(SDLRenderer, texture, IntPtr.Zero, ref rect);
+                        IntPtr texture = SDL_image.IMG_LoadTexture(SDLRenderer, r.Path);
+                        _ = SDL.SDL_RenderCopyEx(SDLRenderer, texture, IntPtr.Zero, ref rect,
+                            r.Transform.Rotation, ref center, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                         break;
                 }
             }
