@@ -12,13 +12,13 @@ namespace BloodlineEngine
         private static Vector2 m_WindowSize = new();
         private static Vector2 m_CameraPosition = new();
 
-        public static event Action<Key>? KeyDown;
-        public static event Action<Key>? KeyUp;
-        private static HashSet<Key> m_ActiveKeys = new();
+        public static event Action<Keyboard>? KeyDown;
+        public static event Action<Keyboard>? KeyUp;
+        private readonly static HashSet<Keyboard> m_ActiveKeys = new();
 
         public static event Action<Button>? ButtonDown;
         public static event Action<Button>? ButtonUp;
-        private static HashSet<Button> m_ActiveButtons = new();
+        private readonly static HashSet<Button> m_ActiveButtons = new();
 
         public static void Press(Key key) { KeyDown?.Invoke(key); m_ActiveKeys.Add(key); }
         public static void Release(Key key) { KeyUp?.Invoke(key); m_ActiveKeys.Remove(key); }

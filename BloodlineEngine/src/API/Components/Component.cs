@@ -48,14 +48,14 @@
         }
 
         public delegate void BLComponentEventDelegate(Component component);
-        public static BLComponentEventDelegate ReadyDelegate = (Component component) => component.BLReady();
-        public static BLComponentEventDelegate DebugSparkDelegate = (Component component) => component.BLDebugSpark();
-        public static BLComponentEventDelegate SparkDelegate = (Component component) => component.BLSpark();
-        public static BLComponentEventDelegate DrawDelegate = (Component component) => component.BLDraw();
-        public static BLComponentEventDelegate UpdateDelegate = (Component component) => component.BLUpdate();
-        public static BLComponentEventDelegate FixedUpdateDelegate = (Component component) => component.BLFixedUpdate();
-        public static BLComponentEventDelegate DebugShiftDelegate = (Component component) => component.BLDebugShift();
-        public static BLComponentEventDelegate HaltDelegate = (Component component) => component.BLHalt();
+        public readonly static BLComponentEventDelegate ReadyDelegate = (Component component) => component.BLReady();
+        public readonly static BLComponentEventDelegate DebugSparkDelegate = (Component component) => component.BLDebugSpark();
+        public readonly static BLComponentEventDelegate SparkDelegate = (Component component) => component.BLSpark();
+        public readonly static BLComponentEventDelegate DrawDelegate = (Component component) => component.BLDraw();
+        public readonly static BLComponentEventDelegate UpdateDelegate = (Component component) => component.BLUpdate();
+        public readonly static BLComponentEventDelegate FixedUpdateDelegate = (Component component) => component.BLFixedUpdate();
+        public readonly static BLComponentEventDelegate DebugShiftDelegate = (Component component) => component.BLDebugShift();
+        public readonly static BLComponentEventDelegate HaltDelegate = (Component component) => component.BLHalt();
 
         private bool m_DebugSparkOnce, m_SparkOnce, m_DrawOnce, m_UpdateOnce, m_FixedUpdateOnce, m_DebugShiftOnce = false;
 
@@ -136,6 +136,6 @@
         private void BLKilled() { BaseKilled(); Killed(); }
         private void BLDisabled() { BaseDisabled(); Disabled(); }
 
-        public override string ToString() { return "Component()"; }
+        public override string ToString() => "Component()";
     }
 }

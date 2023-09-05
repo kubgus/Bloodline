@@ -1,16 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	<TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	<Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+       <TargetFramework>net6.0</TargetFramework>
+       <ImplicitUsings>enable</ImplicitUsings>
+       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+       <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include=".assets\BloodlineLogo512.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+    <ItemGroup>
+        <Content Include=".assets\BloodlineLogo512.ico">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Include="SDL2.dll" />
+    </ItemGroup>
+	
 </Project>

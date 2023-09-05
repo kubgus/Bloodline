@@ -1,6 +1,4 @@
-﻿using SDL2;
-
-namespace BloodlineEngine
+﻿namespace BloodlineEngine
 {
     /// <summary>
     /// Represents a single mouse button.
@@ -13,6 +11,8 @@ namespace BloodlineEngine
         {
             Mousebutton = mousebutton;
         }
+
+        public override string ToString() => $"{Mousebutton}";
 
         public static implicit operator Mouse(Button button)
         { return button.Mousebutton; }

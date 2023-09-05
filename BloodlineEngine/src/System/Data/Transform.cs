@@ -74,7 +74,7 @@
             return vertices;
         }
 
-        public override string ToString() { return $"Transform2D({Position},{Scale},{Rotation})"; }
+        public override string ToString() => $"Transform2D({Position},{Scale},{Rotation})";
 
         public static Transform operator +(Transform left, Transform right) { return new Transform(
             left.Position + right.Position,

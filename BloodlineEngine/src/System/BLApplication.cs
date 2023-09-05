@@ -1,31 +1,37 @@
-﻿namespace BloodlineEngine
+﻿using System.Reflection;
+
+namespace BloodlineEngine
 {
     public abstract class BLApplication
     {
-        public BLWindow Window { get; private set; }
+        public readonly BLWindow Window;
         public BLRenderer Renderer => Window.Renderer;
 
         public Camera RenderedCamera => Renderer.Camera;
         public Camera RendererCamera => Renderer.Camera;
 
         private bool m_Running;
-        private Thread m_MainThread;
+        private readonly Thread m_MainLoopThread;
 
         public BLApplication(Vector2 windowSize, string windowTitle = "Bloodline Application",
             bool lauchWithConsoleShown = false, bool windowResizable = false)
         {
             if (lauchWithConsoleShown) Debug.StartConsole();
 
+            CopySDL();
             Window = new BLWindow(windowSize, windowTitle, windowResizable);
 
-            m_MainThread = new Thread(MainLoop);
-            m_MainThread.Start();
+            m_MainLoopThread = new Thread(MainLoop);
+            m_MainLoopThread.Start();
 
             Time.FixedUpdate += BLFixedUpdate;
 
             m_Running = true;
+
+            Window.BLStartHandlingEvents(); // Must run last
         }
 
+        // Runs on a separate thread
         private void MainLoop()
         {
             BLReady();
@@ -34,21 +40,21 @@
             {
                 BLDebugSpark();
 
-                if (!m_MainThread.IsAlive || !Window.Opened) { m_Running = false; return; }
+                if (!m_MainLoopThread.IsAlive || !Window.Opened) { m_Running = false; return; }
 
                 BLSpark();
 
                 try
                 {
                     BLDraw();
-
-                    Renderer.Render();
+                    Renderer.BLRender();
 
                     BLUpdate();
 
                     Thread.Sleep(1);
                 }
-                catch (Exception error) { 
+                catch (Exception error)
+                {
                     Debug.BLWarn("Window is not present! It is either being initialized or has not been created at all.");
                     Debug.BLError(error);
                 }
@@ -58,11 +64,11 @@
 
             BLHalt();
 
-            return; // Formerly Application.Exit()
+            return;
         }
 
-        private Dictionary<string, object> m_NamedInstances = new();
-        private List<object> m_UnnamedInstances = new();
+        private readonly Dictionary<string, object> m_NamedInstances = new();
+        private readonly List<object> m_UnnamedInstances = new();
         protected T Instantiate<T>(string key) where T : Root, new()
         {
             Debug.Assert(!m_NamedInstances.ContainsKey(key), $"An instance with key: '{key}' already exists!");
@@ -113,5 +119,16 @@
         { DebugShift(); BLGeneralComponentHandler.Run(Component.DebugShiftDelegate); }
         private void BLHalt()
         { Halt(); BLGeneralComponentHandler.Run(Component.HaltDelegate); }
+
+        // Additional methods
+
+        private static void CopySDL()
+        {
+            if (!OperatingSystem.IsWindows()) return;
+            Debug.Info("Copying SDL2.dll (Embedded Resource) into the running directory...");
+            using Stream? resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("BloodlineEngine.SDL2.dll");
+            using FileStream fileStream = File.Create("SDL2.dll");
+            resourceStream?.CopyTo(fileStream);
+        }
     }
 }

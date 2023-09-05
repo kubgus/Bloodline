@@ -1,6 +1,4 @@
-﻿using SDL2;
-
-namespace BloodlineEngine
+﻿namespace BloodlineEngine
 {
     public class Color4 : IVector
     {
@@ -14,11 +12,11 @@ namespace BloodlineEngine
         private int b;
         private int a;
 
-        public static Color4 Red { get; private set; } = new Color4(255, 0, 0, 255);
-        public static Color4 Green { get; private set; } = new Color4(0, 255, 0, 255);
-        public static Color4 Blue { get; private set; } = new Color4(0, 0, 255, 255);
-        public static Color4 White { get; private set; } = new Color4(255, 255, 255, 255);
-        public static Color4 Magenta { get; private set; } = new Color4(255, 0, 255, 255);
+        public static Color4 Red => new(255, 0, 0, 255);
+        public static Color4 Green  => new(0, 255, 0, 255);
+        public static Color4 Blue => new(0, 0, 255, 255);
+        public static Color4 White => new(255, 255, 255, 255);
+        public static Color4 Magenta => new(255, 0, 255, 255);
 
         public Color4(int r, int g, int b, int a)
         {
@@ -59,8 +57,8 @@ namespace BloodlineEngine
         {
             try
             {
-                if (hex.StartsWith("#")) hex = hex.Substring(1);
-                if (hex.Length != 6 || hex.Length != 8) throw new ArgumentException("Hex string must be 6 or 8 charachers long! (RGB[A])");
+                if (hex.StartsWith("#")) hex = hex[1..];
+                if (hex.Length != 6 && hex.Length != 8) throw new ArgumentException("Hex string must be 6 or 8 charachers long! (RGB[A])");
                 return new SDL.SDL_Color()
                 {
                     r = Convert.ToByte(hex[..2], 16),
@@ -72,7 +70,7 @@ namespace BloodlineEngine
             catch { Debug.BLWarn("Hex color parameter incorrect! Defaulting to magenta."); return Magenta; }
         }
 
-        public override string ToString() { return $"Color4({R},{G},{B},{A})"; }
+        public override string ToString() => $"Color4({R},{G},{B},{A})";
 
         public static implicit operator Color4(int value)
         { return new Color4(value, 255); }

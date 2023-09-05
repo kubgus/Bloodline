@@ -1,6 +1,4 @@
-﻿using SDL2;
-
-namespace BloodlineEngine
+﻿namespace BloodlineEngine
 {
     public class Key
     {
@@ -10,6 +8,8 @@ namespace BloodlineEngine
         {
             Keycode = keycode;
         }
+
+        public override string ToString() => $"{Keycode}";
 
         public static implicit operator Keyboard(Key key)
         { return key.Keycode; }

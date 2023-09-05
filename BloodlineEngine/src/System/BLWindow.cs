@@ -1,6 +1,4 @@
-﻿using SDL2;
-
-namespace BloodlineEngine
+﻿namespace BloodlineEngine
 {
     public class BLWindow
     {
@@ -18,17 +16,16 @@ namespace BloodlineEngine
 
             Input.BLSetWorldProperties(windowSize: size);
 
+            SDL.SDL_SetHint(SDL.SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
             Debug.Assert(SDL.SDL_Init(SDL.SDL_INIT_VIDEO) == 0, "SDL could not be initialized!");
 
             SDLWindow = SDL.SDL_CreateWindow(title,
                 SDL.SDL_WINDOWPOS_CENTERED, SDL.SDL_WINDOWPOS_CENTERED,
                 (int)size.X, (int)size.Y,
-                resizable ? SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE : SDL.SDL_WindowFlags.SDL_WINDOW_UTILITY);
+                resizable ? SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE : SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
             Debug.Assert(SDLWindow != IntPtr.Zero, "SDL Window could not be created!");
 
             Renderer = new(this);
-
-            HandleEvents();
         }
 
         ~BLWindow()
@@ -37,32 +34,41 @@ namespace BloodlineEngine
             SDL.SDL_Quit();
         }
 
-        private void HandleEvents()
+        public void BLStartHandlingEvents()
         {
-            while (SDL.SDL_PollEvent(out SDL.SDL_Event e) != 0)
+            while (Opened)
             {
-                switch (e.type)
+                while (SDL.SDL_PollEvent(out SDL.SDL_Event e) == 1)
                 {
-                    case SDL.SDL_EventType.SDL_QUIT: Close(); break;
-                    case SDL.SDL_EventType.SDL_KEYDOWN: Input.Press(e.key.keysym.sym); break;
-                    case SDL.SDL_EventType.SDL_KEYUP: Input.Release(e.key.keysym.sym); break;
-                    case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN: Input.Press(e.button.button); break;
-                    case SDL.SDL_EventType.SDL_MOUSEBUTTONUP: Input.Release(e.button.button); break;
-                    case SDL.SDL_EventType.SDL_MOUSEMOTION: Input.BLModifyMousePosition((e.motion.x, e.motion.y)); break;
-                    case SDL.SDL_EventType.SDL_WINDOWEVENT: // Window events
-                        switch (e.window.windowEvent) // ^^
-                        {
-                            case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE: Close(); break;
-                            case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_GAINED: Focus(); break;
-                            case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_LOST: Blur(); break;
-                            case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_RESIZED: Scaled((e.window.data1, e.window.data2)); break;
-                        }
-                        break;
+                    switch (e.type)
+                    {
+                        case SDL.SDL_EventType.SDL_QUIT: Close(); break;
+                        case SDL.SDL_EventType.SDL_KEYDOWN: Input.Press(e.key.keysym.sym); break;
+                        case SDL.SDL_EventType.SDL_KEYUP: Input.Release(e.key.keysym.sym); break;
+                        case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN: Input.Press(e.button.button); break;
+                        case SDL.SDL_EventType.SDL_MOUSEBUTTONUP: Input.Release(e.button.button); break;
+                        case SDL.SDL_EventType.SDL_MOUSEMOTION: Input.BLModifyMousePosition((e.motion.x, e.motion.y)); break;
+                        case SDL.SDL_EventType.SDL_WINDOWEVENT: // Window events
+                            switch (e.window.windowEvent) // ^^
+                            {
+                                case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE: Close(); break;
+                                case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_GAINED: Focus(); break;
+                                case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_LOST: Blur(); break;
+                                case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_RESIZED: Scaled((e.window.data1, e.window.data2)); break;
+                            }
+                            break;
+                    }
                 }
             }
         }
 
-        private void Close() { Opened = false; }
+        private void Close()
+        {
+            Opened = false;
+            SDL.SDL_DestroyWindow(SDLWindow);
+            SDL.SDL_DestroyRenderer(Renderer.SDLRenderer);
+            SDL.SDL_Quit();
+        }
 
         private void Focus() { Active = true; }
         private void Blur() { Active = false; }
