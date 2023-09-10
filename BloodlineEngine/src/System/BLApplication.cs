@@ -126,7 +126,7 @@ namespace BloodlineEngine
         private static void CopyEmbeddedResource(string path, bool assertion = true)
         {
             if (!assertion) return;
-            Debug.Info($"Copying Embedded Resources ({path}) into the running directory...");
+            Debug.BLInfo($"Copying Embedded Resources ({path}) into the running directory...");
             using Stream? resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"BloodlineEngine.{path}");
             using FileStream fileStream = File.Create(path);
             resourceStream?.CopyTo(fileStream);

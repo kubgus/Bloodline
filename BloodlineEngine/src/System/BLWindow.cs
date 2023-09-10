@@ -28,7 +28,7 @@
 
             Renderer = new(this);
 
-            Debug.Info($"Initialized a window with SDL!");
+            Debug.BLInfo($"Initialized a window with SDL!");
         }
 
         ~BLWindow()

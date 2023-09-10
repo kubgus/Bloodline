@@ -41,41 +41,29 @@
             {
                 if (!renderedComponent.IsActive) { continue; }
 
-                // Prepare rotation
-                SDL.SDL_Point center = new()
+                Vector2 position = renderedComponent.Transform.Position - Camera.Position;
+                Vector2 scale = renderedComponent.Transform.Scale;
+                float rotation = renderedComponent.Transform.Rotation;
+
+                SDL.SDL_Rect rect = new()
                 {
-                    x = (int)(renderedComponent.Transform.Center.X),
-                    y = (int)(renderedComponent.Transform.Center.Y),
+                    x = (int)position.X,
+                    y = (int)position.Y,
+                    w = (int)scale.X,
+                    h = (int)scale.Y,
                 };
 
-                SDL.SDL_Rect rect;
                 switch (renderedComponent)
                 {
                     case Quad r:
-                        rect = new()
-                        {
-                            x = (int)r.Transform.Position.X,
-                            y = (int)r.Transform.Position.Y,
-                            w = (int)r.Transform.Scale.X,
-                            h = (int)r.Transform.Scale.Y,
-                        };
                         _ = SDL.SDL_SetRenderDrawColor(SDLRenderer,
                             (byte)r.Color.R, (byte)r.Color.G, (byte)r.Color.B, (byte)r.Color.A);
                         _ = SDL.SDL_RenderFillRect(SDLRenderer, ref rect);
                         break;
                     case Sprite r:
-                        // TODO: Fix wrong movement
                         if (r.Path is null) { Debug.Warn("Sprite received no path!"); continue; }
-                        rect = new()
-                        {
-                            x = (int)r.Transform.Position.X,
-                            y = (int)r.Transform.Position.Y,
-                            w = (int)r.Transform.Scale.X,
-                            h = (int)r.Transform.Scale.Y,
-                        };
                         IntPtr texture = SDL_image.IMG_LoadTexture(SDLRenderer, r.Path);
-                        _ = SDL.SDL_RenderCopyEx(SDLRenderer, texture, IntPtr.Zero, ref rect,
-                            r.Transform.Rotation, ref center, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                        _ = SDL.SDL_RenderCopy(SDLRenderer, texture, IntPtr.Zero, ref rect);
                         break;
                 }
             }

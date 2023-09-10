@@ -13,6 +13,18 @@ namespace Sandbox
         }
     }
 
+    class CameraFollow : Component
+    {
+        public override void Update()
+        {
+            Camera camera = (Camera)Args["Camera"];
+            if (Input.IsKeyPressed(Keyboard.Up)) { camera.Position.Y -= 2f; }
+            if (Input.IsKeyPressed(Keyboard.Down)) { camera.Position.Y += 2f; }
+            if (Input.IsKeyPressed(Keyboard.Left)) { camera.Position.X -= 2f; }
+            if (Input.IsKeyPressed(Keyboard.Right)) { camera.Position.X += 2f; }
+        }
+    }
+
     class Player : Root
     {
         public override void Init()
@@ -20,9 +32,10 @@ namespace Sandbox
             CreateComponent<Sprite>()
                 .Src("assets/player.png")
                 //.Col(Color4.Red)
-                .Pos(0f)
-                .Scl(256f);
+                .Scl(256f)
+                .Ctr(256f);
             CreateComponent<KeyboardMovement>();
+            CreateComponent<CameraFollow>();
         }
     }
 
@@ -34,12 +47,14 @@ namespace Sandbox
         {
             Renderer.ClearColor = "#000000";
 
-            Instantiate<Player>();
+            Instantiate<Player>()
+                .Arg("Camera", RenderedCamera);
         }
 
         public override void Update()
         {
-            // Debug.Trace(Time.ElapsedFrames);
+            
+            // Debug.Trace(RenderedCamera.Position);
         }
     }
 
