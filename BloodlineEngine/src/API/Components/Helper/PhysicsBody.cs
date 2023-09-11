@@ -2,12 +2,12 @@
 {
     public class PhysicsBody : Component
     {
-        public Vector2 Velocity { get; set; } = 0f;
-        public float Gravity { get; set; } = 0f;
+        public Vector2 Velocity { get; set; } = new();
+        public float Gravity { get; set; }
         /// <summary>
         /// The slow-down of an object.
         /// </summary>
-        public Vector2 Drag { get; set; } = 0f;
+        public Vector2 Drag { get; set; } = new();
 
         public PhysicsBody Vel(Vector2 velocity) { Velocity = velocity; return this; }
         public PhysicsBody Gra(float gravity) { Gravity = gravity; return this; }
