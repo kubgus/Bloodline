@@ -85,7 +85,7 @@
                 - Camera.Position;
             Vector2 scale = renderedComponent.Transform.Scale
                 * cameraScale;
-            // TODO: Make camera rotation relative to screen
+            // TODO: Make camera rotation relative to screen.
             float rotation = renderedComponent.Transform.Rotation
                 + Camera.Rotation;
 
