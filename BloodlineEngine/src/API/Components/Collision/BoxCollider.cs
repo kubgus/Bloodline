@@ -12,7 +12,7 @@
 
         public override bool IsColliding(CollisionComponent other)
         {
-            // TODO: Maybe change to switch statment later, for now it looks cleaner this way.
+            // Maybe change to switch statment later, for now it looks cleaner this way.
             if (other is BoxCollider boxCollider) { return IsColliding(boxCollider); }
             return false;
         }

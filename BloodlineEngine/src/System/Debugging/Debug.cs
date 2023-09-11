@@ -2,8 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-// TODO: Toggle console.
-
 namespace BloodlineEngine
 {
     public static class Debug

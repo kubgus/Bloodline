@@ -12,7 +12,6 @@
             get => m_TransformComponent.Transform;
             set => m_TransformComponent.Transform = value;
         }
-        // TODO: Check if not being able to access TransformComponent causes any problems.
         private BLTransformComponent m_TransformComponent;
 
         private List<Component> m_LocalActiveComponents = new();

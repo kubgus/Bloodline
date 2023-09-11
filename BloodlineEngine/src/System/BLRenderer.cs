@@ -77,13 +77,17 @@
 
         private void Draw(RenderedComponent renderedComponent, IntPtr texture)
         {
-            Vector2 position = renderedComponent.Transform.Position
-                * (Camera.Scale + 1f)
-                - renderedComponent.Transform.Scale / 2f
+            Vector2 cameraScale = 1f + Camera.Scale;
+
+            Vector2 position = (renderedComponent.Transform.Position - renderedComponent.Transform.Scale / 2f)
+                * cameraScale
                 + Camera.WindowSize / 2f
                 - Camera.Position;
-            Vector2 scale = renderedComponent.Transform.Scale * (Camera.Scale + 1f);
-            float rotation = renderedComponent.Transform.Rotation - Camera.Rotation;
+            Vector2 scale = renderedComponent.Transform.Scale
+                * cameraScale;
+            // TODO: Make camera rotation relative to screen
+            float rotation = renderedComponent.Transform.Rotation
+                + Camera.Rotation;
 
             SDL.SDL_Rect destRect = new()
             {
@@ -100,7 +104,7 @@
             };
 
             _ = SDL.SDL_RenderCopyEx(SDLRenderer, texture, IntPtr.Zero, ref destRect,
-                renderedComponent.Transform.Rotation, ref pivot,
+                rotation, ref pivot,
                 renderedComponent.HorizontalFlip && renderedComponent.VerticalFlip ? SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL | SDL.SDL_RendererFlip.SDL_FLIP_VERTICAL :
                 renderedComponent.HorizontalFlip && !renderedComponent.VerticalFlip ? SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL :
                 !renderedComponent.HorizontalFlip && renderedComponent.VerticalFlip ? SDL.SDL_RendererFlip.SDL_FLIP_VERTICAL :

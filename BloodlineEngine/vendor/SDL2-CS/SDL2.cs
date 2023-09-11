@@ -146,7 +146,7 @@ namespace BloodlineEngine
 				ptr++;
 			}
 
-			/* TODO: This #ifdef is only here because the equivalent
+			/* This #ifdef is only here because the equivalent
 			 * .NET 2.0 constructor appears to be less efficient?
 			 * Here's the pretty version, maybe steal this instead:
 			 *

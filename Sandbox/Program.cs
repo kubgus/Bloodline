@@ -64,7 +64,7 @@ namespace Sandbox
         public override void Update()
         {
             
-            // Debug.Trace(RenderedCamera.Position);
+            Debug.Trace(GetInstance<Player>().Transform.Position);
         }
     }
 

@@ -1,6 +1,4 @@
-﻿// TODO: Allow clients to create custom event callback.
-
-namespace BloodlineEngine
+﻿namespace BloodlineEngine
 {
     public static class Input
     {
