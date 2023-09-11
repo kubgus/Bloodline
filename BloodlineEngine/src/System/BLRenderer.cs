@@ -75,17 +75,18 @@
             return m_ActiveRenderedComponents.OrderBy(renderedComponent => renderedComponent.Transform.Z).ToList();
         }
 
+        // TODO: Fix camera rotation
         private void Draw(RenderedComponent renderedComponent, IntPtr texture)
         {
             Vector2 cameraScale = 1f + Camera.Scale;
-
-            Vector2 position = (renderedComponent.Transform.DefaultTopLeft)
+            Vector2 positionWithoutCameraRotation = renderedComponent.Transform.DefaultTopLeft
                 * cameraScale
                 + Camera.WindowSize / 2f
                 - Camera.Position;
+
+            Vector2 position = Vector2.RotateVertex(positionWithoutCameraRotation, Camera.Position + Camera.WindowSize / 2f, Camera.Rotation);
             Vector2 scale = renderedComponent.Transform.Scale
                 * cameraScale;
-            // TODO: Make camera rotation relative to screen.
             float rotation = renderedComponent.Transform.Rotation
                 + Camera.Rotation;
 

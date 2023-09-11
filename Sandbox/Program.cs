@@ -90,6 +90,12 @@ namespace Sandbox
             ThrowawayInstance<TestObject>().Transform.Position = (160f, 160f);
             ThrowawayInstance<TestObject>().Transform.Position = (1f, -80f);
         }
+
+        public override void Update()
+        {
+            Debug.Trace(GetInstance<Player>().Transform.Position);
+            Debug.Trace(RenderedCamera.Position);
+        }
     }
 
     class Program
