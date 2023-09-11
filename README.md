@@ -21,4 +21,4 @@ In typical ECS, you create entities, which are basically just numbers that compo
 <br>
 
 ## Cross-platform ⭐
-This service is not cross-platform, yet, and only works on Winodws. But I'm planning to add the option to export elsewhere.
+This service is cross-platform. It should work on Windows, Mac, Linux, Android and iOS. Not thoroughly tested yet.
