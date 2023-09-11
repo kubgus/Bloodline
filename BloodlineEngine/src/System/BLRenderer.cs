@@ -79,7 +79,7 @@
         {
             Vector2 cameraScale = 1f + Camera.Scale;
 
-            Vector2 position = (renderedComponent.Transform.Position - renderedComponent.Transform.Scale / 2f)
+            Vector2 position = (renderedComponent.Transform.DefaultTopLeft)
                 * cameraScale
                 + Camera.WindowSize / 2f
                 - Camera.Position;

@@ -11,7 +11,7 @@
 
         public Transform Transform { get => Root.Transform; set => Root.Transform = value; }
         public Component Pos(Vector2 position) { Transform.Position = position; return this; }
-        public Component Ctr(Vector2 center) { Transform.Center = center; return this; }
+        public Component Dtl(Vector2 defaultTopLeft) { Transform.DefaultTopLeft = defaultTopLeft; return this; }
         public Component Scl(Vector2 scale) { Transform.Scale = scale; return this; }
         public Component Rot(float rotation) { Transform.Rotation = rotation; return this; }
         public Component Zee(float z) { Transform.Z = z; return this; }

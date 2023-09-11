@@ -2,8 +2,17 @@
 {
     public class Transform
     {
+        /// <summary>
+        /// Transform origin. (center)
+        /// </summary>
         public Vector2 Position { get; set; } = new();
+        /// <summary>
+        /// Distance of parallel edges.
+        /// </summary>
         public Vector2 Scale { get; set; } = new();
+        /// <summary>
+        /// Rotation around origin. (angle)
+        /// </summary>
         public float Rotation { get; set; }
         public float Z { get; set; }
 
@@ -28,53 +37,44 @@
             set => Position.Y = value;
         }
 
-        public Vector2 TopLeft
+        public Vector2 Center
         {
             get => Position;
             set => Position = value;
         }
-        public Vector2 TopRight
+
+        public Vector2 DefaultTopLeft
         {
-            get => (Position.X + Scale.X, Position.Y);
-            set => Position = (value.X - Scale.X, value.Y);
+            get => Position - Scale / 2f;
+            set => Position = value + Scale / 2f;
         }
-        public Vector2 BottomLeft
+        public Vector2 DefaultTopRight
         {
-            get => (Position.X, Position.Y + Scale.Y);
-            set { Position = (value.X, value.Y - Scale.Y); }
+            get => (Position.X + Scale.X / 2f, Position.Y - Scale.Y / 2f);
+            set => Position = (value.X - Scale.X / 2f, value.Y + Scale.Y / 2f);
         }
-        public Vector2 BottomRight
+        public Vector2 DefaultBottomLeft
         {
-            get => Position + Scale;
-            set => Position = value - Scale;
+            get => (Position.X - Scale.X / 2f, Position.Y + Scale.Y / 2f);
+            set => Position = (value.X + Scale.X / 2f, value.Y - Scale.Y / 2f);
         }
-        public Vector2 Center
+        public Vector2 DefaultBottomRight
         {
-            get => Position + Scale / 2;
-            set => Position = value - Scale / 2;
+            get => Position + Scale / 2f;
+            set => Position = value - Scale / 2f;
         }
+
+        public Vector2 TopLeft => Vector2.RotateVertex(DefaultTopLeft, Center, Rotation);
+        public Vector2 TopRight => Vector2.RotateVertex(DefaultTopRight, Center, Rotation);
+        public Vector2 BottomLeft => Vector2.RotateVertex(DefaultBottomLeft, Center, Rotation);
+        public Vector2 BottomRight => Vector2.RotateVertex(DefaultBottomRight, Center, Rotation);
 
         public Vector2[] Vertices => CalculateVertices(this);
 
         public static Vector2[] CalculateVertices(Transform transform)
-        {
-            Vector2[] vertices = new Vector2[4]
-            {
-                transform.Position,
-                transform.Position + (transform.Scale.X, 0f),
-                transform.Position + transform.Scale,
-                transform.Position + (0f, transform.Scale.Y),
-            };
+        { return new Vector2[4] { transform.TopLeft, transform.TopRight, transform.BottomRight, transform.BottomLeft }; }
 
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i] = Vector2.RotateVertex(vertices[i], transform.Center, transform.Rotation);
-            }
-
-            return vertices;
-        }
-
-        public override string ToString() => $"Transform2D({Position},{Scale},{Rotation})";
+        public override string ToString() => $"Transform2D({Position},{Scale},{Rotation},{Z})";
 
         public static Transform operator +(Transform left, Transform right) { return new Transform(
             left.Position + right.Position,

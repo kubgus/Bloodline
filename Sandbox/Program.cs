@@ -2,6 +2,31 @@
 
 namespace Sandbox
 {
+    class CollisionColor : Component
+    {
+        public override void Update()
+        {
+            if (Root.GetComponent<BoxCollider>().IsColliding("Player"))
+                Root.GetComponent<Quad>().Color = "0000ff";
+            else
+                Root.GetComponent<Quad>().Color = "00ff00";
+        }
+    }
+
+    class TestObject : Root
+    {
+        public override void Init()
+        {
+            CreateComponent<Quad>()
+                .Col("00ff00")
+                .Scl(50f)
+                .Rot(Chance.RandomFloat(0f, 360f))
+                .Zee(-5f);
+            CreateComponent<BoxCollider>();
+            CreateComponent<CollisionColor>();
+        }
+    }
+
     class KeyboardMovement : Component
     {
         public override void Update()
@@ -43,9 +68,11 @@ namespace Sandbox
                 //.Src("assets/player.png")
                 .Col(Color4.Red)
                 .Scl(256f)
-                .Ctr(0f);
+                .Pos(0f);
             CreateComponent<KeyboardMovement>();
             CreateComponent<CameraController>();
+            CreateComponent<BoxCollider>()
+                .Pin("Player");
         }
     }
 
@@ -59,12 +86,9 @@ namespace Sandbox
 
             Instantiate<Player>()
                 .Arg("Camera", RenderedCamera);
-        }
 
-        public override void Update()
-        {
-            
-            Debug.Trace(GetInstance<Player>().Transform.Position);
+            ThrowawayInstance<TestObject>().Transform.Position = (160f, 160f);
+            ThrowawayInstance<TestObject>().Transform.Position = (1f, -80f);
         }
     }
 
