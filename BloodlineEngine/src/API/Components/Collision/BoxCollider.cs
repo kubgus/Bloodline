@@ -10,7 +10,7 @@
 
         public Transform ModifiedTransform => Transform + RelativeTransform;
 
-        public override bool IsColliding(CollisionComponent other)
+        protected override bool IsCollidingAbstraction(CollisionComponent other)
         {
             // Maybe change to switch statment later, for now it looks cleaner this way.
             if (other is BoxCollider boxCollider) { return IsColliding(boxCollider); }
