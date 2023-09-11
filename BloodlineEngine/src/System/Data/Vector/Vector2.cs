@@ -7,17 +7,18 @@
 
         public Vector2(float x, float y) { X = x; Y = y; }
         public Vector2(float xy) { X = xy; Y = xy; }
-        public Vector2() { X = Zero().X; Y = Zero().Y; }
+        public Vector2() { X = Zero.X; Y = Zero.Y; }
 
-        public Vector2 Copy() { return new Vector2(X, Y); }
+        public static Vector2 Zero => new(0, 0);
 
+        public Vector2 Copy => Duplicate(this);
         public float Magnitude => Mag(this);
         public Vector2 Normalized => Normalize(this);
         public float Direction => Dir(this);
         public Vector2 Absolute => Abs(this);
 
-        public static Vector2 Zero()
-        { return new Vector2(0, 0); }
+        public static Vector2 Duplicate(Vector2 value)
+        { return new Vector2(value.X, value.Y); }
         public static float Mag(Vector2 value)
         { return (float)Math.Sqrt(value.X * value.X + value.Y * value.Y); }
         public static Vector2 Normalize(Vector2 value)

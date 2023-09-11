@@ -23,5 +23,12 @@
         }
 
         public static int AnyInt() { return m_RandomClass.Next(); }
+
+        public static T Pick<T>(T[] values)
+        {
+            if (values == null || values.Length == 0)
+            { throw new ArgumentException("The input array is empty or null."); }
+            return values[RandomInt(0, values.Length)];
+        }
     }
 }
