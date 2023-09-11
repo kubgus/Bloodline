@@ -36,7 +36,7 @@
 
     public enum Mouse
     {
-        None = -1,
+        None = 0,
         Left, Middle, Right,
         X1, X2
     }
