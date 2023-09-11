@@ -1,6 +1,6 @@
 ﻿namespace BloodlineEngine
 {
-    public class PhysicsBody : Component
+    public class VelocityBody : Component
     {
         public Vector2 Velocity { get; set; } = new();
         public float Gravity { get; set; }
@@ -9,11 +9,11 @@
         /// </summary>
         public Vector2 Drag { get; set; } = new();
 
-        public PhysicsBody Vel(Vector2 velocity) { Velocity = velocity; return this; }
-        public PhysicsBody Gra(float gravity) { Gravity = gravity; return this; }
-        public PhysicsBody Dra(Vector2 drag) { Drag = drag; return this; }
+        public VelocityBody Vel(Vector2 velocity) { Velocity = velocity; return this; }
+        public VelocityBody Gra(float gravity) { Gravity = gravity; return this; }
+        public VelocityBody Dra(Vector2 drag) { Drag = drag; return this; }
         /// <param name="drag">Horizontal drag.</param>
-        public PhysicsBody Dra(float dragX) { Drag.X = dragX; return this; }
+        public VelocityBody Dra(float dragX) { Drag.X = dragX; return this; }
 
         protected Func<bool> BeforePhysics { get; set; } = () => { return true; };
         protected Func<bool> AfterPhysics { get; set; } = () => { return true; };
@@ -24,17 +24,17 @@
         protected Func<bool> BeforeVerticalPhysics { get; set; } = () => { return true; };
         protected Func<bool> AfterVerticalPhysics { get; set; } = () => { return true; };
 
-        public PhysicsBody Bep(Func<bool> beforePhysics) { BeforePhysics = beforePhysics; return this; }
-        public PhysicsBody Afp(Func<bool> afterPhysics) { AfterPhysics = afterPhysics; return this; }
+        public VelocityBody Bep(Func<bool> beforePhysics) { BeforePhysics = beforePhysics; return this; }
+        public VelocityBody Afp(Func<bool> afterPhysics) { AfterPhysics = afterPhysics; return this; }
 
-        public PhysicsBody Bhp(Func<bool> beforeHorizontalPhysics)
+        public VelocityBody Bhp(Func<bool> beforeHorizontalPhysics)
         { BeforeHorizontalPhysics = beforeHorizontalPhysics; return this; }
-        public PhysicsBody Ahp(Func<bool> afterHorizontalPhysics)
+        public VelocityBody Ahp(Func<bool> afterHorizontalPhysics)
         { AfterHorizontalPhysics = afterHorizontalPhysics; return this; }
 
-        public PhysicsBody Bvp(Func<bool> beforeVerticalPhysics)
+        public VelocityBody Bvp(Func<bool> beforeVerticalPhysics)
         { BeforeVerticalPhysics = beforeVerticalPhysics; return this; }
-        public PhysicsBody Avp(Func<bool> afterVerticalPhysics)
+        public VelocityBody Avp(Func<bool> afterVerticalPhysics)
         { AfterVerticalPhysics = afterVerticalPhysics; return this; }
 
         protected override void BaseFixedUpdate()
