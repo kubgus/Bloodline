@@ -41,29 +41,17 @@
             {
                 if (!renderedComponent.IsActive) { continue; }
 
-                Vector2 position = renderedComponent.Transform.Position - Camera.Position;
-                Vector2 scale = renderedComponent.Transform.Scale;
-                float rotation = renderedComponent.Transform.Rotation;
-
-                SDL.SDL_Rect rect = new()
-                {
-                    x = (int)position.X,
-                    y = (int)position.Y,
-                    w = (int)scale.X,
-                    h = (int)scale.Y,
-                };
-
                 switch (renderedComponent)
                 {
                     case Quad r:
-                        _ = SDL.SDL_SetRenderDrawColor(SDLRenderer,
-                            (byte)r.Color.R, (byte)r.Color.G, (byte)r.Color.B, (byte)r.Color.A);
-                        _ = SDL.SDL_RenderFillRect(SDLRenderer, ref rect);
+                        IntPtr quadSurface = SDL.SDL_CreateRGBSurface(0, (int)r.Transform.Scale.X, (int)r.Transform.Scale.Y, 32, 0, 0, 0, 0);
+                        _ = SDL.SDL_FillRect(quadSurface, IntPtr.Zero, (uint)r.Color);
+                        Draw(r, SDL.SDL_CreateTextureFromSurface(SDLRenderer, quadSurface));
+                        SDL.SDL_FreeSurface(quadSurface);
                         break;
                     case Sprite r:
-                        if (r.Path is null) { Debug.Warn("Sprite received no path!"); continue; }
-                        IntPtr texture = SDL_image.IMG_LoadTexture(SDLRenderer, r.Path);
-                        _ = SDL.SDL_RenderCopy(SDLRenderer, texture, IntPtr.Zero, ref rect);
+                        if (r.Path is null) { Debug.BLWarn("Sprite received no path!"); continue; }
+                        Draw(r, SDL_image.IMG_LoadTexture(SDLRenderer, r.Path));
                         break;
                 }
             }
@@ -85,6 +73,38 @@
         private static List<RenderedComponent> GetOrdered()
         {
             return m_ActiveRenderedComponents.OrderBy(renderedComponent => renderedComponent.Transform.Z).ToList();
+        }
+
+        private void Draw(RenderedComponent renderedComponent, IntPtr texture)
+        {
+            Vector2 position = renderedComponent.Transform.Position
+                * (Camera.Scale + 1f)
+                - renderedComponent.Transform.Scale / 2f
+                + Camera.WindowSize / 2f
+                - Camera.Position;
+            Vector2 scale = renderedComponent.Transform.Scale * (Camera.Scale + 1f);
+            float rotation = renderedComponent.Transform.Rotation - Camera.Rotation;
+
+            SDL.SDL_Rect destRect = new()
+            {
+                x = (int)position.X,
+                y = (int)position.Y,
+                w = (int)scale.X,
+                h = (int)scale.Y,
+            };
+
+            SDL.SDL_Point pivot = new()
+            {
+                x = (int)scale.X / 2,
+                y = (int)scale.Y / 2,
+            };
+
+            _ = SDL.SDL_RenderCopyEx(SDLRenderer, texture, IntPtr.Zero, ref destRect,
+                renderedComponent.Transform.Rotation, ref pivot,
+                renderedComponent.HorizontalFlip && renderedComponent.VerticalFlip ? SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL | SDL.SDL_RendererFlip.SDL_FLIP_VERTICAL :
+                renderedComponent.HorizontalFlip && !renderedComponent.VerticalFlip ? SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL :
+                !renderedComponent.HorizontalFlip && renderedComponent.VerticalFlip ? SDL.SDL_RendererFlip.SDL_FLIP_VERTICAL :
+                SDL.SDL_RendererFlip.SDL_FLIP_NONE);
         }
     }
 }

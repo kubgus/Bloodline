@@ -2,8 +2,8 @@
 {
     public class Transform
     {
-        public Vector2 Position { get; set; } = new Vector2();
-        public Vector2 Scale { get; set; } = new Vector2();
+        public Vector2 Position { get; set; } = new();
+        public Vector2 Scale { get; set; } = new();
         public float Rotation { get; set; }
         public float Z { get; set; }
 

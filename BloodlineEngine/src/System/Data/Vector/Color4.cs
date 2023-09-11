@@ -105,7 +105,11 @@
                 A = value.a
             };
         }
+
         public static implicit operator Color4(string hex)
         { return FromHex(hex); }
+
+        public static explicit operator uint(Color4 color)
+        { return (uint)((color.A << 24) | (color.R << 16) | (color.G << 8) | color.B); }
     }
 }
